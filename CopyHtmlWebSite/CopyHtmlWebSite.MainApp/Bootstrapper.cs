@@ -6,6 +6,10 @@ using Prism.Unity;
 
 namespace CopyHtmlWebSite.MainApp
 {
+    using System.Windows.Navigation;
+    using Prism.Regions;
+    using ViewModels;
+
     class Bootstrapper : UnityBootstrapper
     {
         protected override DependencyObject CreateShell()
@@ -22,6 +26,19 @@ namespace CopyHtmlWebSite.MainApp
         {
             var moduleCatalog = (ModuleCatalog)ModuleCatalog;
             //moduleCatalog.AddModule(typeof(YOUR_MODULE));
+        }
+
+
+
+        protected override void ConfigureContainer()
+        {
+            base.ConfigureContainer();
+            Container.RegisterTypeForNavigation<MainWindow>(nameof(MainWindow));
+            Container.RegisterTypeForNavigation<CreateNewSiteUserControl>(nameof(CreateNewSiteUserControl));
+            Container.RegisterTypeForNavigation<MainUserControl>(nameof(MainUserControl));
+            Container.RegisterTypeForNavigation<RightMenuUserControl>(nameof(RightMenuUserControl));
+            Container.RegisterTypeForNavigation<SettingsUserControl>(nameof(SettingsUserControl));
+
         }
     }
 }

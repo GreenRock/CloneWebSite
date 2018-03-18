@@ -1,17 +1,12 @@
-﻿namespace CopyHtmlWebSite.MainApp.ViewModels
+﻿namespace CopyHtmlWebSite.MainApp.ViewModels.ViewModelBases
 {
     using System;
     using System.Threading.Tasks;
     using System.Windows;
     using Prism.Mvvm;
-    using Properties;
 
     public abstract class ViewModelBase : BindableBase
     {
-        public string Title => ViewName + " - " + Resources.ApplicationName;
-
-        protected abstract string ViewName { get; }
-
         private bool _isBusy = false;
         public bool IsBusy
         {

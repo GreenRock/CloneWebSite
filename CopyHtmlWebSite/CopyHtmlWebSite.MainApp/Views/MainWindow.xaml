@@ -2,96 +2,25 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:prism="http://prismlibrary.com/"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:mainApp="clr-namespace:CopyHtmlWebSite.MainApp"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="{Binding Title}" Height="350" Width="525" MinHeight="350" MinWidth="525">
+        Title="{Binding Title}" Height="350" Width="525" MinHeight="350" MaxHeight="700" MinWidth="525" MaxWidth="1000">
     <Window.Resources>
-        <Style x:Key="TextboxStyle" TargetType="TextBox">
-            <Setter Property="IsEnabled" Value="False"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="TextAlignment" Value="Left"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="FontSize" Value="24"/>
-        </Style>
-        <Style x:Key="ButtonImageStartStyle" TargetType="Image">
-            <Style.Triggers>
-                <DataTrigger Binding="{ Binding IsStart }" Value="False">
-                    <Setter Property="Image.Source" Value="../Resources/start.png" />
-                </DataTrigger>
-                <DataTrigger Binding="{ Binding IsStart }" Value="True">
-                    <Setter Property="Image.Source" Value="../Resources/stop.ico" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-        <Style x:Key="ListViewSiteStyle" TargetType="ListView">
-            <Setter Property="VerticalAlignment" Value="Stretch"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="Margin" Value="0, 10,0,0"/>
-        </Style>
-        <Style x:Key="ButtonBase" TargetType="Button">
-            <Setter Property="Background" Value="Transparent"/> 
-            <Setter Property="BorderBrush" Value="Transparent"/>
-        </Style>
+     
     </Window.Resources>
+
     <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4*"/>
-            <ColumnDefinition Width="40"/>
-            <ColumnDefinition Width="40"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="50"/>
         </Grid.ColumnDefinitions>
+        <ContentControl Grid.Column="0" prism:RegionManager.RegionName="{ x:Static mainApp:Regions.MainRegion }" HorizontalAlignment="Stretch">
 
-        <TextBox Text="{ Binding SaveToFolder }" 
-                 Grid.Row="0" 
-                 Grid.Column="0" 
-                 Style="{ StaticResource TextboxStyle }"/>
+        </ContentControl>
+        <ContentControl Grid.Column="1" prism:RegionManager.RegionName="{ x:Static mainApp:Regions.RightRegion }" HorizontalAlignment="Stretch">
+            
+        </ContentControl>
 
-        <Button Grid.Row="0" Grid.Column="1" Height="32" Width="32" Command="{Binding Path=ChooseFolderCommand}" Background="Transparent">
-            <Image Source="../Resources/folder.png" Height="32" Width="32"></Image>
-        </Button>
-
-        <Button Command="{ Binding StartCommand }" Grid.Row="0" Grid.Column="2" Height="34" Width="34" Style="{ StaticResource ButtonBase }">
-            <Image Height="30" Width="30" Style="{ StaticResource ButtonImageStartStyle }"/>
-        </Button>
-
-        <Button Command="{ Binding CreateSiteCommand }" Grid.Row="1" Grid.Column="2" Height="34" Width="34" Style="{ StaticResource ButtonBase }">
-            <Image Height="30" Width="30" Source="../Resources/create.png"/>
-        </Button>
-
-        <ListView Grid.Row="1" 
-                  Grid.Column="0" 
-                  Grid.ColumnSpan="2"
-                  ItemsSource="{ Binding Sites }" 
-                  Style="{ StaticResource ListViewSiteStyle }">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn DisplayMemberBinding="{ Binding SiteName }" >
-                        <GridViewColumn.HeaderTemplate>
-                            <DataTemplate>
-                                <Label Padding="10">Site name</Label>
-                            </DataTemplate>
-                        </GridViewColumn.HeaderTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{ Binding TotalLink }">
-                        <GridViewColumn.HeaderTemplate>
-                            <DataTemplate>
-                                <Label Padding="10">Total Links</Label>
-                            </DataTemplate>
-                        </GridViewColumn.HeaderTemplate>
-                    </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{ Binding Status }">
-                        <GridViewColumn.HeaderTemplate>
-                            <DataTemplate>
-                                <Label Padding="10">Status</Label>
-                            </DataTemplate>
-                        </GridViewColumn.HeaderTemplate>
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
-        </ListView>
     </Grid>
+
 </Window>
