@@ -58,6 +58,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\WatermarkAdorner.cs" />
+    <Compile Include="Controls\WatermarkService.cs" />
+    <Compile Include="Models\PageModel.cs" />
+    <Compile Include="Models\SiteStatus.cs" />
     <Compile Include="ViewModels\CreateNewSiteUserControlViewModel.cs" />
     <Compile Include="ViewModels\MainUserControlViewModel.cs" />
     <Compile Include="ViewModels\SettingsUserControlViewModel.cs" />
@@ -75,6 +79,10 @@
     <Compile Include="Views\SettingsUserControl.xaml.cs">
       <DependentUpon>SettingsUserControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="Assests\ResourceDictionaryBase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CreateNewSiteUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -148,13 +156,25 @@
     <Resource Include="Resources\stop.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\create.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\home.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\settings.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CopyHtmlWebSite.Core\CopyHtmlWebSite.Core.csproj">
+      <Project>{f45a5e5b-0176-4b5e-ba9c-a1674d0460dc}</Project>
+      <Name>CopyHtmlWebSite.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\create_new.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\add_page.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

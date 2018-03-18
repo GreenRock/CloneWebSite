@@ -22,7 +22,7 @@
 
         public virtual bool IsNavigationTarget(NavigationContext navigationContext)
         {
-            return false;
+            return true;
         }
 
         public virtual void OnNavigatedFrom(NavigationContext navigationContext)

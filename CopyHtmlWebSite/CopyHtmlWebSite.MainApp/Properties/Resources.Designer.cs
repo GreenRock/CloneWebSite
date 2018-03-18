@@ -61,6 +61,26 @@ namespace CopyHtmlWebSite.MainApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap add {
+            get {
+                object obj = ResourceManager.GetObject("add", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap add_page {
+            get {
+                object obj = ResourceManager.GetObject("add_page", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Small Start.
         /// </summary>
         internal static string ApplicationName {
@@ -72,9 +92,9 @@ namespace CopyHtmlWebSite.MainApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap create {
+        internal static System.Drawing.Bitmap create_new {
             get {
-                object obj = ResourceManager.GetObject("create", resourceCulture);
+                object obj = ResourceManager.GetObject("create_new", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyHtmlWebSite.MainApp", "CopyHtmlWebSite.MainApp\CopyHtmlWebSite.MainApp.csproj", "{A3AA53DC-082B-44CB-A998-5557F20E7B5E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyHtmlWebSite.Core", "CopyHtmlWebSite.Core\CopyHtmlWebSite.Core.csproj", "{F45A5E5B-0176-4B5E-BA9C-A1674D0460DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{A3AA53DC-082B-44CB-A998-5557F20E7B5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3AA53DC-082B-44CB-A998-5557F20E7B5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3AA53DC-082B-44CB-A998-5557F20E7B5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F45A5E5B-0176-4B5E-BA9C-A1674D0460DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F45A5E5B-0176-4B5E-BA9C-A1674D0460DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F45A5E5B-0176-4B5E-BA9C-A1674D0460DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F45A5E5B-0176-4B5E-BA9C-A1674D0460DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

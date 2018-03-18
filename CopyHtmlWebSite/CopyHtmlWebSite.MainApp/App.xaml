@@ -1,8 +1,5 @@
 ﻿<Application x:Class="CopyHtmlWebSite.MainApp.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:CopyHtmlWebSite.MainApp">
-    <Application.Resources>
-         
-    </Application.Resources>
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
 </Application>
