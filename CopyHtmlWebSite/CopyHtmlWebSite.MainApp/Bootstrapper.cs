@@ -8,6 +8,7 @@ namespace CopyHtmlWebSite.MainApp
 {
     using System.Windows.Navigation;
     using Prism.Regions;
+    using Services.DataStorages;
     using ViewModels;
 
     class Bootstrapper : UnityBootstrapper
@@ -33,6 +34,7 @@ namespace CopyHtmlWebSite.MainApp
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
+            Container.RegisterType<IDataStorage, MemoryDataStorage>(new ContainerControlledLifetimeManager());
             Container.RegisterTypeForNavigation<MainWindow>(nameof(MainWindow));
             Container.RegisterTypeForNavigation<CreateNewSiteUserControl>(nameof(CreateNewSiteUserControl));
             Container.RegisterTypeForNavigation<MainUserControl>(nameof(MainUserControl));

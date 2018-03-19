@@ -62,6 +62,8 @@
     <Compile Include="Controls\WatermarkService.cs" />
     <Compile Include="Models\PageModel.cs" />
     <Compile Include="Models\SiteStatus.cs" />
+    <Compile Include="Services\DataStorages\IDataStorage.cs" />
+    <Compile Include="Services\DataStorages\MemoryDataStorage.cs" />
     <Compile Include="ViewModels\CreateNewSiteUserControlViewModel.cs" />
     <Compile Include="ViewModels\MainUserControlViewModel.cs" />
     <Compile Include="ViewModels\SettingsUserControlViewModel.cs" />
@@ -144,7 +146,7 @@
     <PackageReference Include="Prism.Unity" Version="6.3.0" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Services\" />
+    <Resource Include="Resources\remove.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\folder.png" />
@@ -175,6 +177,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\add_page.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\save.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

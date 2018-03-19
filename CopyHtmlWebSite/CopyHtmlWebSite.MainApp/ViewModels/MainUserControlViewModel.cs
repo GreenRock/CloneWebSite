@@ -6,20 +6,35 @@
     using System.Windows.Input;
     using Models;
     using Prism.Commands;
-    using Prism.Events;
     using Prism.Regions;
+    using Services.DataStorages;
     using ViewModelBases;
 
     public class MainUserControlViewModel : NavigationViewModelBase
     {
-        private readonly IEventAggregator _eventAggregator;
+        private readonly IDataStorage _dataStorage;
         public MainUserControlViewModel(IRegionManager regionManager, 
-                                        IEventAggregator eventAggregator) 
+            IDataStorage dataStorage) 
             : base(regionManager)
         {
-            _eventAggregator = eventAggregator;
+            _dataStorage = dataStorage;
+            Sites = new ObservableCollection<SiteModel>();
         }
 
+        public override void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            base.OnNavigatedTo(navigationContext);
+            Sites.Clear();
+
+            var sites = _dataStorage.GetSites();
+            if (sites != null)
+            {
+                foreach (var site in sites)
+                {
+                    Sites.Add(site);
+                }
+            }
+        }
 
         private ICommand _chooseFolderCommand;
 
@@ -51,6 +66,17 @@
         {
             get => _sites;
             set => SetProperty(ref _sites, value);
+        }
+
+        private ICommand _removeSiteCommand;
+
+        public ICommand RemoveSiteCommand => _removeSiteCommand ?? (_removeSiteCommand =
+                                        new DelegateCommand<SiteModel>(ExecuteRemoveSiteCommand, (site) => site != null && !IsBusy)
+                                            .ObservesProperty(() => IsBusy));
+
+        private void ExecuteRemoveSiteCommand(SiteModel site)
+        {
+            Sites.Remove(site);
         }
     }
 }

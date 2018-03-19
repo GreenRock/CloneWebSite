@@ -2,9 +2,12 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
-             prism:ViewModelLocator.AutoWireViewModel="True">
+             prism:ViewModelLocator.AutoWireViewModel="True" x:Name="Main">
     <UserControl.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Assests/ResourceDictionaryBase.xaml" />
+            </ResourceDictionary.MergedDictionaries>
             <Style x:Key="TextboxStyle" TargetType="TextBox">
                 <Setter Property="IsEnabled" Value="False"/>
                 <Setter Property="HorizontalContentAlignment" Value="Left"/>
@@ -34,18 +37,23 @@
             <Image Source="../Resources/folder.png" Height="32" Width="32"></Image>
         </Button>
         <ListView Grid.Row="1" 
-                              Grid.Column="0" 
-                              Grid.ColumnSpan="2"
-                              ItemsSource="{ Binding Sites }" 
-                              Style="{ StaticResource ListViewSiteStyle }">
+                Grid.Column="0" 
+                Grid.ColumnSpan="2"
+                ItemsSource="{ Binding Sites }" 
+                Style="{ StaticResource ListViewSiteStyle }">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{ Binding SiteName }">
+                    <GridViewColumn>
                         <GridViewColumn.HeaderTemplate>
                             <DataTemplate>
                                 <Label Padding="10">Site name</Label>
                             </DataTemplate>
                         </GridViewColumn.HeaderTemplate>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Padding="10" HorizontalAlignment="Stretch" Content="{ Binding SiteName }"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{ Binding Pages.Count }">
                         <GridViewColumn.HeaderTemplate>
@@ -54,12 +62,29 @@
                             </DataTemplate>
                         </GridViewColumn.HeaderTemplate>
                     </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{ Binding Status }">
+                    <GridViewColumn>
                         <GridViewColumn.HeaderTemplate>
                             <DataTemplate>
                                 <Label Padding="10">Status</Label>
                             </DataTemplate>
                         </GridViewColumn.HeaderTemplate>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Padding="10" HorizontalAlignment="Stretch" Content="{ Binding Status }"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Style="{ StaticResource ButtonBase }"
+                                        ToolTip="Add a new site"
+                                        HorizontalAlignment="Center"
+                                        Command="{ Binding ElementName=Main, Path=DataContext.RemoveSiteCommand}" CommandParameter="{ Binding }">
+                                    <Image Height="30" Width="30" Source="../Resources/remove.png"/>
+                                </Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>

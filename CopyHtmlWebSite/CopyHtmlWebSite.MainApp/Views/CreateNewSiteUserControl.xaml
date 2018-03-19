@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:controls="clr-namespace:CopyHtmlWebSite.MainApp.Controls"
-             prism:ViewModelLocator.AutoWireViewModel="True">
+             prism:ViewModelLocator.AutoWireViewModel="True" x:Name="CreateNewSite">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -47,11 +47,12 @@
         <Button Grid.Row="0" 
                 Grid.Column="2"
                 Style="{ StaticResource ButtonBase }"
-                ToolTip="Add a new site">
-            <Image Height="30" Width="30" Source="../Resources/add_page.png"/>
+                ToolTip="Add a new site"
+                Command="{ Binding AddSiteCommand }">
+            <Image Height="30" Width="30" Source="../Resources/save.png"/>
         </Button>
 
-        <TextBox Text="{ Binding Page.Name }" 
+        <TextBox Text="{ Binding PageName }" 
                  Grid.Row="1" 
                  Grid.Column="0" 
                  Style="{ StaticResource TextBoxStyle }">
@@ -59,7 +60,7 @@
                 <TextBlock>Page name</TextBlock>
             </controls:WatermarkService.Watermark>
         </TextBox>
-        <TextBox Text="{ Binding Page.Link }"
+        <TextBox Text="{ Binding PageLink }"
                  Grid.Row="1" 
                  Grid.Column="1" 
                  Style="{ StaticResource TextBoxStyle }">
@@ -77,22 +78,49 @@
             <Image Height="30" Width="30" Source="../Resources/add.png"/>
         </Button>
 
-        <ListView Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" ItemsSource="{ Binding Pages }">
+        <ListView Grid.Row="2" 
+                  Grid.Column="0" 
+                  Grid.ColumnSpan="3" 
+                  ItemsSource="{ Binding Pages }" 
+                  SelectedItem="{ Binding PageSelected }" 
+                  HorizontalAlignment="Stretch">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{ Binding PageName }">
+                    <GridViewColumn Width="100">
                         <GridViewColumn.HeaderTemplate>
                             <DataTemplate>
-                                <Label Padding="10">Page name</Label>
+                                <Label Padding="10" HorizontalAlignment="Stretch" Content="Page name"/>
                             </DataTemplate>
                         </GridViewColumn.HeaderTemplate>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Padding="10" HorizontalAlignment="Stretch" Content="{ Binding Name }"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{ Binding PageLink }">
+                    <GridViewColumn Width="450">
                         <GridViewColumn.HeaderTemplate>
                             <DataTemplate>
-                                <Label Padding="10">Page link</Label>
+                                <Label Padding="10" HorizontalAlignment="Stretch" Content="Page link"/>
                             </DataTemplate>
                         </GridViewColumn.HeaderTemplate>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBox Padding="10" Width="450" HorizontalAlignment="Stretch" Text="{ Binding Link }"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Width="50">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Style="{ StaticResource ButtonBase }"
+                                        ToolTip="Add a new site"
+                                        HorizontalAlignment="Center"
+                                        Command="{ Binding ElementName=CreateNewSite, Path=DataContext.RemovePageCommand}" CommandParameter="{ Binding }">
+                                    <Image Height="30" Width="30" Source="../Resources/remove.png"/>
+                                </Button>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>

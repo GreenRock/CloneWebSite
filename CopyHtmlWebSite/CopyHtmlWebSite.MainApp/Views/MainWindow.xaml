@@ -4,7 +4,7 @@
         xmlns:prism="http://prismlibrary.com/"
         xmlns:mainApp="clr-namespace:CopyHtmlWebSite.MainApp"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="{Binding Title}" Height="350" Width="525" MinHeight="350" MaxHeight="700" MinWidth="525" MaxWidth="1000">
+        Title="{Binding Title}" Height="350" Width="525" MinHeight="350" MaxHeight="700" MinWidth="700" MaxWidth="700">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

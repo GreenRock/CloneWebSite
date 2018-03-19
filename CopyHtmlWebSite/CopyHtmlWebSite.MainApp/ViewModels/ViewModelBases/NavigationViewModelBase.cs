@@ -2,7 +2,7 @@
 {
     using Prism.Regions;
 
-    public class NavigationViewModelBase : ViewModelBase
+    public class NavigationViewModelBase : ViewModelBase, INavigationAware
     {
         protected readonly IRegionManager _regionManager;
         public NavigationViewModelBase(IRegionManager regionManager)
