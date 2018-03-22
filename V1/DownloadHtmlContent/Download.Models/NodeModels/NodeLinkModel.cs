@@ -7,5 +7,6 @@
         public string UrlInFile { get; set; }
         public string LocalLink { get; set; }
         public string OnlineLink { get; set; }
+        public string PageLink { get; set; }
     }
 }

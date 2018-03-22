@@ -4,9 +4,9 @@ namespace Download.Services.WebClientServices
 {
     public interface IWebClientService
     {
-        Task<string> DownloadStringAsync(string url);
-        Task DownloadFileAsync(string url, string directory);
-        Task<bool> IsUrl(string url);
+        Task<string> DownloadStringAsync(string url, string referer);
+        Task DownloadFileAsync(string url, string directory, string referer);
+        Task<bool> IsUrl(string url, string referer);
         Task<bool> IsUrlAsync(string url);
     }
 }

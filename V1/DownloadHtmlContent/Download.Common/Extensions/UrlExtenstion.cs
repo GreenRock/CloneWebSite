@@ -34,6 +34,7 @@ namespace Download.Common.Extensions
             {
                 url = url.Substring(0, indexQuestion);
             }
+
             return url;
         }
         public bool IsUrl(string url)

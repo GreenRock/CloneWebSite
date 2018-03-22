@@ -10,5 +10,6 @@ namespace Download.AppMain.Models
         public string HtmlPage { get; set; }
         public AnalysisUrlModel RootPage { get; set; }
         public IEnumerable<HtmlTagModel> HtmlTagModels { get; set; }
+        public string PageLink { get; set; }
     }
 }

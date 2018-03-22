@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -36,7 +35,7 @@ namespace Download.AppMain.Services
             _fileExtension = fileExtension;
         }
 
-        public async Task<NodeLinkModel> HandleLink(AnalysisUrlModel analysisUrlModel, HtmlTagModel htmlTagModel, string pagePath)
+        public async Task<NodeLinkModel> HandleLink(AnalysisUrlModel analysisUrlModel, HtmlTagModel htmlTagModel, string pagePath, string referer)
         {
             try
             {
@@ -59,7 +58,7 @@ namespace Download.AppMain.Services
                     return HandleImageBase64(htmlTagModel.Link, pagePath, folderFile);
                 }
 
-                string onlineLink = await FixLink(analysisUrlModel, htmlTagModel.Link);
+                string onlineLink = await FixLink(analysisUrlModel, htmlTagModel.Link, referer);
 
                 string nameFile = _urlExtenstion.GetFileNameFromUrl(onlineLink);
 
@@ -97,7 +96,7 @@ namespace Download.AppMain.Services
                 string filePath = Path.Combine(pagePath, folderTypeString, nameFile);
 
                 if (!_fileExtension.Exists(filePath))
-                    _webClientService.DownloadFileAsync(onlineLink, filePath).Wait();
+                    _webClientService.DownloadFileAsync(onlineLink, filePath, referer).Wait();
 
                 return new NodeLinkModel
                 {
@@ -115,7 +114,7 @@ namespace Download.AppMain.Services
             }
         }
 
-        public async Task<IEnumerable<NodeLinkModel>> HandleCss(string cssFile, AnalysisUrlModel analysisUrlModel, string pagePath)
+        public async Task<IEnumerable<NodeLinkModel>> HandleCss(string cssFile, AnalysisUrlModel analysisUrlModel, string pagePath, string referer)
         {
             try
             {
@@ -164,7 +163,7 @@ namespace Download.AppMain.Services
                             folderFile = FolderType.Images;
                         }
 
-                        string onlineLink = await FixLink(analysisUrlModel, linkImage);
+                        string onlineLink = await FixLink(analysisUrlModel, linkImage, referer);
 
                         string nameFile = _urlExtenstion.GetFileNameFromUrl(linkImage);
 
@@ -180,7 +179,7 @@ namespace Download.AppMain.Services
 
                         if (!_fileExtension.Exists(filePath))
                         {
-                            await _webClientService.DownloadFileAsync(onlineLink, filePath);
+                            await _webClientService.DownloadFileAsync(onlineLink, filePath, referer);
                         }
 
                         string urlInFile;
@@ -223,7 +222,7 @@ namespace Download.AppMain.Services
         }
 
         #region Private Method
-        private async Task<string> FixLink(AnalysisUrlModel analysisUrlModel, string link)
+        private async Task<string> FixLink(AnalysisUrlModel analysisUrlModel, string link, string referer)
         {
             string linkFix;
 
@@ -232,17 +231,17 @@ namespace Download.AppMain.Services
             else if (_urlExtenstion.IsUrl(link))
                 linkFix = link;
             else
-                linkFix = await FindLinkOnline(analysisUrlModel, link);
+                linkFix = await FindLinkOnline(analysisUrlModel, link, referer);
 
             linkFix = _urlExtenstion.BestUrl(linkFix);
 
-            if (!await _webClientService.IsUrl(linkFix))
+            if (!await _webClientService.IsUrl(linkFix, referer))
                 linkFix = string.Empty;
 
             return linkFix;
         }
 
-        private async Task<string> FindLinkOnline(AnalysisUrlModel analysisUrlModel, string link)
+        private async Task<string> FindLinkOnline(AnalysisUrlModel analysisUrlModel, string link, string referer)
         {
             if (string.IsNullOrWhiteSpace(link))
                 return string.Empty;
@@ -250,8 +249,8 @@ namespace Download.AppMain.Services
             string rootPage = analysisUrlModel.RootPage;
 
             string onlineLink = $"{rootPage}/{link}";
-
-            if (await _webClientService.IsUrl(onlineLink))
+            onlineLink = RemoveDeuplicate(onlineLink);
+            if (await _webClientService.IsUrl(onlineLink, referer))
                 return onlineLink;
 
             foreach (var segment in analysisUrlModel.Segments)
@@ -263,8 +262,8 @@ namespace Download.AppMain.Services
                 rootPage = $"{rootPage}{segment}";
 
                 onlineLink = $"{rootPage}/{link}";
-
-                if (! await _webClientService.IsUrl(onlineLink))
+                onlineLink = RemoveDeuplicate(onlineLink);
+                if (! await _webClientService.IsUrl(onlineLink, referer))
                     continue;
                 break;
             }
@@ -293,6 +292,13 @@ namespace Download.AppMain.Services
             };
         }
 
+        private string RemoveDeuplicate(string urlString)
+        {
+            var val = (string)urlString.Clone();
+            val = Regex.Replace(val, @"(:\/\/)", "@@@@@@@@@");
+            val = Regex.Replace(val, @"(\/\/)", "/");
+            return Regex.Replace(val, "@@@@@@@@@", "://");
+        }
         #endregion
     }
 }

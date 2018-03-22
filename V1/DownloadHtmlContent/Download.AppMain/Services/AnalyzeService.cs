@@ -61,7 +61,7 @@ namespace Download.AppMain.Services
 
             if (!pageLink.IsHtml)
             {
-                var htmlPage = await _webClientService.DownloadStringAsync(pageLink.Link);
+                var htmlPage = await _webClientService.DownloadStringAsync(pageLink.Link, pageLink.Link);
 
                 if (string.IsNullOrEmpty(htmlPage))
                     return null;
@@ -88,13 +88,14 @@ namespace Download.AppMain.Services
             return new SourceAndAllLinkInPageModel
             {
                 PageName = pageLink.LinkName,
+                PageLink = pageLink.Link,
                 HtmlPage = pageLink.SourcePage,
                 RootPage = rootPage,
                 HtmlTagModels = htmlNodeModels
             };
         }
 
-        public List<NodeLinkModel> DownloadLinkFromNode(AnalysisUrlModel rootPage, string projectPath, IEnumerable<HtmlTagModel> htmlNodeModels)
+        public List<NodeLinkModel> DownloadLinkFromNode(AnalysisUrlModel rootPage, string projectPath, IEnumerable<HtmlTagModel> htmlNodeModels, string referer)
         {
             List<NodeLinkModel> nodeLinks = new List<NodeLinkModel>();
 
@@ -103,7 +104,7 @@ namespace Download.AppMain.Services
             foreach (var htmlNode in htmlNodeModels)
             {
                 var page = rootPage;
-                var handleLink = _handleFileService.HandleLink(page, htmlNode, projectPath);
+                var handleLink = _handleFileService.HandleLink(page, htmlNode, projectPath, referer);
                 tasks.Add(handleLink);
             }
 
@@ -117,6 +118,7 @@ namespace Download.AppMain.Services
             {
                 if (nodeLinkModel != null && !string.IsNullOrEmpty(nodeLinkModel.OnlineLink))
                 {
+                    nodeLinkModel.PageLink = referer;
                     nodeLinks.Add(nodeLinkModel);
                 }
             }

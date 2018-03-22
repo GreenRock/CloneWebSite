@@ -246,7 +246,7 @@
                 if (sourceAndAllLinkInPageModel == null)
                     continue;
 
-                var result = _analyzeService.DownloadLinkFromNode(sourceAndAllLinkInPageModel.RootPage, projectCurrentPath, htmlTags);
+                var result = _analyzeService.DownloadLinkFromNode(sourceAndAllLinkInPageModel.RootPage, projectCurrentPath, htmlTags, sourceAndAllLinkInPageModel.PageLink);
 
                 IEnumerable<NodeLinkModel> nodeLinks = result.Where(c => c != null);
 
@@ -279,7 +279,7 @@
                 {
                     AnalysisUrlModel rootPageCurrent = _urlExtenstion.DetectRoot(nodeLink.OnlineLink);
 
-                    var task = _handleFileService.HandleCss(nodeLink.LocalLink, rootPageCurrent, projectCurrentPath);
+                    var task = _handleFileService.HandleCss(nodeLink.LocalLink, rootPageCurrent, projectCurrentPath, nodeLink.PageLink);
 
                     tasklist.Add(task);
                 }
@@ -296,7 +296,7 @@
                     {
                         AnalysisUrlModel rootPageCurrent = _urlExtenstion.DetectRoot(cssFile.OnlineLink);
 
-                        var task = _handleFileService.HandleCss(cssFile.LocalLink, rootPageCurrent, projectCurrentPath);
+                        var task = _handleFileService.HandleCss(cssFile.LocalLink, rootPageCurrent, projectCurrentPath, cssFile.PageLink);
 
                         tasklistcssFile.Add(task);
                     }
