@@ -58,7 +58,7 @@
                     <GridViewColumn DisplayMemberBinding="{ Binding Pages.Count }">
                         <GridViewColumn.HeaderTemplate>
                             <DataTemplate>
-                                <Label Padding="10">Total Links</Label>
+                                <Label Padding="10">Total Sources</Label>
                             </DataTemplate>
                         </GridViewColumn.HeaderTemplate>
                     </GridViewColumn>

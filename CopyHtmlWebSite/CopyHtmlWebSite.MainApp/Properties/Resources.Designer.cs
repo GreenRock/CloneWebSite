@@ -73,6 +73,16 @@ namespace CopyHtmlWebSite.MainApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap add_html {
+            get {
+                object obj = ResourceManager.GetObject("add_html", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap add_page {
             get {
                 object obj = ResourceManager.GetObject("add_page", resourceCulture);
@@ -116,6 +126,15 @@ namespace CopyHtmlWebSite.MainApp.Properties {
             get {
                 object obj = ResourceManager.GetObject("home", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page name exist. Please choose an others.
+        /// </summary>
+        internal static string NameExist {
+            get {
+                return ResourceManager.GetString("NameExist", resourceCulture);
             }
         }
         

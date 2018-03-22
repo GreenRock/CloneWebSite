@@ -1,0 +1,73 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Download.Models", "Download.Models\Download.Models.csproj", "{F2B562C0-9C61-4C23-BB03-F76FF43634EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Download.Common", "Download.Common\Download.Common.csproj", "{07CC2F08-6C8E-4707-9ABC-A7E8630B8B4E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Download.AppMain", "Download.AppMain\Download.AppMain.csproj", "{8C4D93AB-770E-47F5-A992-A610CACB7AB4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{4C778653-2B73-4311-B32F-FD475B6910A8}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Download.Testing", "Download.Testing\Download.Testing.csproj", "{E717DB1D-E083-434F-B511-4405C7E78B3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Download.Services", "Download.Services\Download.Services.csproj", "{0927352B-8AB0-4722-8B99-8985A22090FB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F2B562C0-9C61-4C23-BB03-F76FF43634EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2B562C0-9C61-4C23-BB03-F76FF43634EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2B562C0-9C61-4C23-BB03-F76FF43634EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2B562C0-9C61-4C23-BB03-F76FF43634EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07CC2F08-6C8E-4707-9ABC-A7E8630B8B4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07CC2F08-6C8E-4707-9ABC-A7E8630B8B4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07CC2F08-6C8E-4707-9ABC-A7E8630B8B4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07CC2F08-6C8E-4707-9ABC-A7E8630B8B4E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C4D93AB-770E-47F5-A992-A610CACB7AB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C4D93AB-770E-47F5-A992-A610CACB7AB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C4D93AB-770E-47F5-A992-A610CACB7AB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C4D93AB-770E-47F5-A992-A610CACB7AB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E717DB1D-E083-434F-B511-4405C7E78B3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E717DB1D-E083-434F-B511-4405C7E78B3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E717DB1D-E083-434F-B511-4405C7E78B3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E717DB1D-E083-434F-B511-4405C7E78B3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0927352B-8AB0-4722-8B99-8985A22090FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0927352B-8AB0-4722-8B99-8985A22090FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0927352B-8AB0-4722-8B99-8985A22090FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0927352B-8AB0-4722-8B99-8985A22090FB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 6
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://anhv.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Download.Models\\Download.Models.csproj
+		SccProjectName1 = Download.Models
+		SccLocalPath1 = Download.Models
+		SccProjectUniqueName2 = Download.Common\\Download.Common.csproj
+		SccProjectName2 = Download.Common
+		SccLocalPath2 = Download.Common
+		SccProjectUniqueName3 = Download.AppMain\\Download.AppMain.csproj
+		SccProjectName3 = Download.AppMain
+		SccLocalPath3 = Download.AppMain
+		SccProjectUniqueName4 = Download.Testing\\Download.Testing.csproj
+		SccProjectName4 = Download.Testing
+		SccLocalPath4 = Download.Testing
+		SccProjectUniqueName5 = Download.Services\\Download.Services.csproj
+		SccProjectName5 = Download.Services
+		SccLocalPath5 = Download.Services
+	EndGlobalSection
+EndGlobal

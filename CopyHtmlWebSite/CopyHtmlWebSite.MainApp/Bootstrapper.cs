@@ -7,7 +7,9 @@ using Prism.Unity;
 namespace CopyHtmlWebSite.MainApp
 {
     using System.Windows.Navigation;
+    using Core.Infrastructure;
     using Prism.Regions;
+    using Services.Converts;
     using Services.DataStorages;
     using ViewModels;
 
@@ -35,6 +37,8 @@ namespace CopyHtmlWebSite.MainApp
         {
             base.ConfigureContainer();
             Container.RegisterType<IDataStorage, MemoryDataStorage>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IConverter, AutoMapperConvert>(new ContainerControlledLifetimeManager());
+
             Container.RegisterTypeForNavigation<MainWindow>(nameof(MainWindow));
             Container.RegisterTypeForNavigation<CreateNewSiteUserControl>(nameof(CreateNewSiteUserControl));
             Container.RegisterTypeForNavigation<MainUserControl>(nameof(MainUserControl));

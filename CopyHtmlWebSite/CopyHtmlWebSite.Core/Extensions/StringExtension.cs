@@ -6,5 +6,10 @@
         {
             return !string.IsNullOrWhiteSpace(val);
         }
+
+        public static bool HasNotText(this string val)
+        {
+            return string.IsNullOrWhiteSpace(val);
+        }
     }
 }
