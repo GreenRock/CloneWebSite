@@ -75,12 +75,16 @@
     <Compile Include="Services\SettingsServices\SettingsConst.cs" />
     <Compile Include="Services\SettingsServices\SettingsService.cs" />
     <Compile Include="ValueConverter\InvertBooleanConvert.cs" />
+    <Compile Include="ViewModels\AboutUserControlViewModel.cs" />
     <Compile Include="ViewModels\CreateNewSiteUserControlViewModel.cs" />
     <Compile Include="ViewModels\MainUserControlViewModel.cs" />
     <Compile Include="ViewModels\PageViewModel.cs" />
     <Compile Include="ViewModels\SettingsUserControlViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBases\NavigationViewModelBase.cs" />
     <Compile Include="ViewModels\RightMenuUserControlViewModel.cs" />
+    <Compile Include="Views\AboutUserControl.xaml.cs">
+      <DependentUpon>AboutUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CreateNewSiteUserControl.xaml.cs">
       <DependentUpon>CreateNewSiteUserControl.xaml</DependentUpon>
     </Compile>
@@ -94,6 +98,10 @@
       <DependentUpon>SettingsUserControl.xaml</DependentUpon>
     </Compile>
     <Page Include="Assests\ResourceDictionaryBase.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AboutUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -205,6 +213,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\add_html.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\contact.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

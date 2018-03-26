@@ -18,25 +18,15 @@
         private ICommand _homeCommand;
 
         public ICommand HomeCommand => _homeCommand ?? (_homeCommand =
-                                        new DelegateCommand(ExecuteHomeCommand, () => !IsStart && !IsBusy)
+                                        new DelegateCommand(() => NavigateTo(nameof(MainUserControl)), () => !IsStart && !IsBusy)
                                             .ObservesProperty(() => IsBusy)
                                             .ObservesProperty(() => IsStart));
-
-        private void ExecuteHomeCommand()
-        {
-            NavigateTo(nameof(MainUserControl));
-        }
 
         private ICommand _startCommand;
 
         public ICommand StartCommand => _startCommand ?? (_startCommand =
-                                        new DelegateCommand(ExecuteStartCommand, () => !IsBusy)
+                                        new DelegateCommand(() => SetIsStart(!IsStart), () => !IsBusy)
                                             .ObservesProperty(() => IsBusy));
-
-        private void ExecuteStartCommand()
-        {
-           
-        }
 
         private bool _isStart;
         public bool IsStart
@@ -54,24 +44,21 @@
         private ICommand _addNewSiteCommand;
 
         public ICommand AddNewSiteCommand => _addNewSiteCommand ?? (_addNewSiteCommand =
-                                        new DelegateCommand(ExecuteAddNewSiteCommand, () => !IsStart && !IsBusy)
+                                        new DelegateCommand(() => NavigateTo(nameof(CreateNewSiteUserControl)), () => !IsStart && !IsBusy)
                                             .ObservesProperty(() => IsBusy)
                                             .ObservesProperty(() => IsStart));
-
-        private void ExecuteAddNewSiteCommand()
-        {
-            NavigateTo(nameof(CreateNewSiteUserControl));
-        }
 
         private ICommand _settingsCommand;
 
         public ICommand SettingsCommand => _settingsCommand ?? (_settingsCommand =
-                                        new DelegateCommand(ExecuteSettingsCommand, () => !IsStart && !IsBusy)
+                                        new DelegateCommand(() => NavigateTo(nameof(SettingsUserControl)), () => !IsStart && !IsBusy)
                                             .ObservesProperty(() => IsBusy)
                                             .ObservesProperty(() => IsStart));
-        private void ExecuteSettingsCommand()
-        {
-            NavigateTo(nameof(SettingsUserControl));
-        }
+
+        private ICommand _aboutCommand;
+
+        public ICommand AboutCommand => _aboutCommand ?? (_aboutCommand =
+                                        new DelegateCommand(() => NavigateTo(nameof(AboutUserControl)), () => !IsBusy)
+                                            .ObservesProperty(() => IsBusy));
     }
 }

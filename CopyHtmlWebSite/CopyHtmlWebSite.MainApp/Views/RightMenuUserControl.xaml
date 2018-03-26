@@ -27,6 +27,7 @@
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
+                <RowDefinition Height="40" />
             </Grid.RowDefinitions>
             <Button Command="{ Binding HomeCommand }" Grid.Row="0" Style="{ StaticResource ButtonImage }" ToolTip="Home">
                 <Image Source="{StaticResource HomeImage }"  Style="{ StaticResource ImageForButton }"/>
@@ -41,6 +42,10 @@
 
             <Button Command="{ Binding SettingsCommand }" Grid.Row="3" Style="{ StaticResource ButtonImage }" ToolTip="Settins">
                 <Image Source="{ StaticResource SettingsImage }"  Style="{ StaticResource ImageForButton }" />
+            </Button>
+
+            <Button Command="{ Binding AboutCommand }" Grid.Row="4" Style="{ StaticResource ButtonImage }" ToolTip="Settins">
+                <Image Source="{ StaticResource ContactImage }"  Style="{ StaticResource ImageForButton }" />
             </Button>
         </Grid>
     </Grid>

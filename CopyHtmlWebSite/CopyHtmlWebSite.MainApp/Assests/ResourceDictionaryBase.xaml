@@ -10,6 +10,7 @@
     <ImageSource x:Key="StopImage">../Resources/stop.ico</ImageSource>
     <ImageSource x:Key="CreateNewImage">../Resources/create_new.png</ImageSource>
     <ImageSource x:Key="SettingsImage">../Resources/settings.png</ImageSource>
+    <ImageSource x:Key="ContactImage">../Resources/contact.png</ImageSource>
     <Style x:Key="ButtonBase" TargetType="Button">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>

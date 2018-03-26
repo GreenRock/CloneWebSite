@@ -1,14 +1,10 @@
 ﻿namespace CopyHtmlWebSite.MainApp
 {
-    using System;
     using System.Windows;
-    using Core.Extensions;
     using Core.Infrastructure;
     using Microsoft.Practices.Unity;
     using Prism.Modularity;
     using Prism.Unity;
-    using Properties;
-    using Services;
     using Services.Converts;
     using Services.DataStorages;
     using Services.DialogServices;
@@ -50,7 +46,7 @@
             Container.RegisterTypeForNavigation<MainUserControl>(nameof(MainUserControl));
             Container.RegisterTypeForNavigation<RightMenuUserControl>(nameof(RightMenuUserControl));
             Container.RegisterTypeForNavigation<SettingsUserControl>(nameof(SettingsUserControl));
-
+            Container.RegisterTypeForNavigation<AboutUserControl>(nameof(AboutUserControl));
         }
     }
 }

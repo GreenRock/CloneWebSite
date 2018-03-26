@@ -91,11 +91,12 @@ namespace CopyHtmlWebSite.MainApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Small Start.
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static string ApplicationName {
+        internal static System.Drawing.Bitmap contact {
             get {
-                return ResourceManager.GetString("ApplicationName", resourceCulture);
+                object obj = ResourceManager.GetObject("contact", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

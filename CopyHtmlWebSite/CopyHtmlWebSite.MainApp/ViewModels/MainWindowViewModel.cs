@@ -7,7 +7,7 @@
 
     public class MainWindowViewModel : ViewModelBase
     {
-        public string Title => "Copy Html Website" + " - " + Resources.ApplicationName;
+        public string Title => string.Join(" - ", "Copy Html Website", Settings.Default.ApplicationName, Settings.Default.Version);
         
         public MainWindowViewModel(IRegionManager regionManager)
         {

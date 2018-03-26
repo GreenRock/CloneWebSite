@@ -82,5 +82,41 @@ namespace CopyHtmlWebSite.MainApp.Properties {
                 this["Font"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Small Start")]
+        public string ApplicationName {
+            get {
+                return ((string)(this["ApplicationName"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Beta")]
+        public string Version {
+            get {
+                return ((string)(this["Version"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Huỳnh Việt An")]
+        public string Owner {
+            get {
+                return ((string)(this["Owner"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("an.huynhviet@hotmail.com")]
+        public string Email {
+            get {
+                return ((string)(this["Email"]));
+            }
+        }
     }
 }
