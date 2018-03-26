@@ -1,32 +1,41 @@
 ﻿namespace CopyHtmlWebSite.MainApp.ViewModels
 {
-    using System;
     using System.Collections.ObjectModel;
-    using System.Windows.Forms;
     using System.Windows.Input;
-    using Models;
+    using Core.Extensions;
+    using Core.Infrastructure;
+    using Core.Models;
     using Prism.Commands;
     using Prism.Regions;
-    using Services.DataStorages;
+    using Properties;
+    using Services.DialogServices;
+    using Services.SettingsServices;
     using ViewModelBases;
 
     public class MainUserControlViewModel : NavigationViewModelBase
     {
+        private readonly ISettingsService _settingsService;
+        private readonly IDialogService _dialogService;
         private readonly IDataStorage _dataStorage;
         public MainUserControlViewModel(IRegionManager regionManager, 
-            IDataStorage dataStorage) 
+            IDataStorage dataStorage, 
+            IDialogService dialogService, 
+            ISettingsService settingsService) 
             : base(regionManager)
         {
             _dataStorage = dataStorage;
+            _dialogService = dialogService;
+            _settingsService = settingsService;
             Sites = new ObservableCollection<SiteModel>();
+            LoadSettings(); // For first time application starting
         }
 
         public override void OnNavigatedTo(NavigationContext navigationContext)
         {
             base.OnNavigatedTo(navigationContext);
             Sites.Clear();
-
-            var sites = _dataStorage.GetSites();
+            LoadSettings();
+             var sites = _dataStorage.GetSites();
             if (sites != null)
             {
                 foreach (var site in sites)
@@ -43,18 +52,14 @@
                                                        .ObservesProperty(() => IsBusy));
         private void ExecuteChooseFolderCommand()
         {
-            using (var dialog = new FolderBrowserDialog())
+            var result = _dialogService.ChooseFolder();
+            if (result.HasText())
             {
-                dialog.Description = @"Please choose a folder";
-                DialogResult result = dialog.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    SaveToFolder = dialog.SelectedPath;
-                }
+                SaveToFolder = result;
             }
         }
 
-        private string _saveToFolder = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+        private string _saveToFolder;
         public string SaveToFolder
         {
             get => _saveToFolder;
@@ -71,12 +76,18 @@
         private ICommand _removeSiteCommand;
 
         public ICommand RemoveSiteCommand => _removeSiteCommand ?? (_removeSiteCommand =
-                                        new DelegateCommand<SiteModel>(ExecuteRemoveSiteCommand, (site) => site != null && !IsBusy)
+                                        new DelegateCommand<SiteModel>(ExecuteRemoveSiteCommand, (site) => !IsBusy)
                                             .ObservesProperty(() => IsBusy));
 
         private void ExecuteRemoveSiteCommand(SiteModel site)
         {
             Sites.Remove(site);
+            _dataStorage.RemoveSite(site);
+        }
+
+        private void LoadSettings()
+        {
+            SaveToFolder = _settingsService.GetSettingsByKey(SettingsConst.SaveTo);
         }
     }
 }

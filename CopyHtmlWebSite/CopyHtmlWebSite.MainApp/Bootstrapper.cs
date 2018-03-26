@@ -1,17 +1,19 @@
-﻿using CopyHtmlWebSite.MainApp.Views;
-using System.Windows;
-using Prism.Modularity;
-using Microsoft.Practices.Unity;
-using Prism.Unity;
-
-namespace CopyHtmlWebSite.MainApp
+﻿namespace CopyHtmlWebSite.MainApp
 {
-    using System.Windows.Navigation;
+    using System;
+    using System.Windows;
+    using Core.Extensions;
     using Core.Infrastructure;
-    using Prism.Regions;
+    using Microsoft.Practices.Unity;
+    using Prism.Modularity;
+    using Prism.Unity;
+    using Properties;
+    using Services;
     using Services.Converts;
     using Services.DataStorages;
-    using ViewModels;
+    using Services.DialogServices;
+    using Services.SettingsServices;
+    using Views;
 
     class Bootstrapper : UnityBootstrapper
     {
@@ -22,7 +24,9 @@ namespace CopyHtmlWebSite.MainApp
 
         protected override void InitializeShell()
         {
-            Application.Current.MainWindow.Show();
+            var settingsService = Container.Resolve<ISettingsService>();
+            settingsService?.InitSettings();
+            if (Application.Current.MainWindow != null) Application.Current.MainWindow.Show();
         }
 
         protected override void ConfigureModuleCatalog()
@@ -38,6 +42,8 @@ namespace CopyHtmlWebSite.MainApp
             base.ConfigureContainer();
             Container.RegisterType<IDataStorage, MemoryDataStorage>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IConverter, AutoMapperConvert>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<IDialogService, DialogService>(new ContainerControlledLifetimeManager());
+            Container.RegisterType<ISettingsService, SettingsService>(new ContainerControlledLifetimeManager());
 
             Container.RegisterTypeForNavigation<MainWindow>(nameof(MainWindow));
             Container.RegisterTypeForNavigation<CreateNewSiteUserControl>(nameof(CreateNewSiteUserControl));

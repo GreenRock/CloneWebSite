@@ -5,15 +5,13 @@
     using System.Collections.Specialized;
     using System.Linq;
     using System.Text.RegularExpressions;
-    using System.Windows;
     using System.Windows.Input;
     using Core.Extensions;
     using Core.Infrastructure;
-    using Models;
+    using Core.Models;
     using Prism.Commands;
     using Prism.Regions;
     using Properties;
-    using Services.DataStorages;
     using ViewModelBases;
     using Views;
 
@@ -73,6 +71,13 @@
             set => SetProperty(ref _siteName, value);
         }
 
+        private string _rootSite;
+        public string RootSite
+        {
+            get => _rootSite;
+            set => SetProperty(ref _rootSite, value);
+        }
+
         private PageViewModel _page;
         public PageViewModel Page
         {
@@ -82,21 +87,26 @@
 
         private DelegateCommand _addSiteCommand;
         public DelegateCommand AddSiteCommand => _addSiteCommand ?? (_addSiteCommand =
-                                              new DelegateCommand(ExecuteAddSiteCommand, 
-                                                      () => !IsBusy 
-                                                            && SiteName.HasText() 
+                                              new DelegateCommand(ExecuteAddSiteCommand,
+                                                      () => !IsBusy
+                                                            && SiteName.HasText()
                                                             && Pages.Any())
                                                   .ObservesProperty(() => IsBusy)
                                                   .ObservesProperty(() => SiteName));
 
         private void ExecuteAddSiteCommand()
         {
-            _dataStorage.AddSite(new SiteModel
+            var siteModel = new SiteModel
             {
-                SiteName = SiteName.Trim(),
+                SiteName = Regex.Replace(SiteName, RegexResource.SpecialChar, string.Empty),
                 Pages = Pages.ToList(),
                 Status = SiteStatus.Pending
-            });
+            };
+            if (RootSite.HasText())
+            {
+                siteModel.RootSite = Regex.Replace(RootSite, string.Join("|", RegexResource.Space, RegexResource.UrlIntoQuotation, RegexResource.LastSlashCharacter), string.Empty);
+            }
+            _dataStorage.AddSite(siteModel);
             NavigateTo(nameof(MainUserControl));
         }
 
@@ -104,9 +114,9 @@
 
         public DelegateCommand AddNewPageCommand => _addNewPageCommand ?? (_addNewPageCommand =
                                         new DelegateCommand(ExecuteAddNewPageCommand,
-                                                () => !IsBusy 
-                                                      && Page != null 
-                                                      && Page.PageSource.HasText() 
+                                                () => !IsBusy
+                                                      && Page != null
+                                                      && Page.PageSource.HasText()
                                                       && Regex.IsMatch(Page.PageSource, RegexResource.Url))
                                             .ObservesProperty(() => IsBusy)
                                             .ObservesProperty(() => Page));
@@ -120,10 +130,10 @@
 
         private DelegateCommand _addPageWithSourceCommand;
         public DelegateCommand AddPageWithSourceCommand => _addPageWithSourceCommand ?? (_addPageWithSourceCommand =
-                                        new DelegateCommand(ExecuteAddPageWithSourceCommand, 
-                                                () => !IsBusy 
-                                                      && Page != null 
-                                                      && Page.PageName.HasText() 
+                                        new DelegateCommand(ExecuteAddPageWithSourceCommand,
+                                                () => !IsBusy
+                                                      && Page != null
+                                                      && Page.PageName.HasText()
                                                       && Page.PageSource.HasText())
                                                 .ObservesProperty(() => IsBusy)
                                                 .ObservesProperty(() => Page));
@@ -161,6 +171,7 @@
 
         private void AddAPage(PageModel pageModel)
         {
+            pageModel.Name = Regex.Replace(pageModel.Name, RegexResource.SpecialChar, string.Empty);
             Pages.Add(pageModel);
             Page.Reset();
             AddSiteCommand.RaiseCanExecuteChanged();

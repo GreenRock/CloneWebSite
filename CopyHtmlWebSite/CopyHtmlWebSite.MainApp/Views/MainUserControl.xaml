@@ -8,14 +8,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Assests/ResourceDictionaryBase.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style x:Key="TextboxStyle" TargetType="TextBox">
-                <Setter Property="IsEnabled" Value="False"/>
-                <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                <Setter Property="TextAlignment" Value="Left"/>
-                <Setter Property="Padding" Value="0"/>
-                <Setter Property="FontSize" Value="24"/>
-            </Style>
             <Style x:Key="ListViewSiteStyle" TargetType="ListView">
                 <Setter Property="VerticalAlignment" Value="Stretch"/>
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -32,9 +24,9 @@
             <RowDefinition Height="35"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBox Grid.Column="0" Grid.Row="0" Text="{ Binding SaveToFolder }" Style="{ StaticResource TextboxStyle }" HorizontalAlignment="Stretch"/>
-        <Button Grid.Column="1" Grid.Row="0" Height="32" Width="32" Command="{Binding Path=ChooseFolderCommand}" Background="Transparent" HorizontalAlignment="Right">
-            <Image Source="../Resources/folder.png" Height="32" Width="32"></Image>
+        <TextBox Grid.Column="0" Grid.Row="0" Text="{ Binding SaveToFolder }" Style="{ StaticResource TextBoxDisableStyle }" />
+        <Button Grid.Column="1" Grid.Row="0" Command="{Binding Path=ChooseFolderCommand}" Style="{ StaticResource ButtonImage }">
+            <Image Source="{ StaticResource FolderImage }" Style="{ StaticResource ImageForButton }"></Image>
         </Button>
         <ListView Grid.Row="1" 
                 Grid.Column="0" 
@@ -52,6 +44,18 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Label Padding="10" HorizontalAlignment="Stretch" Content="{ Binding SiteName }"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn>
+                        <GridViewColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <Label Padding="10">Root site</Label>
+                            </DataTemplate>
+                        </GridViewColumn.HeaderTemplate>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Padding="10" HorizontalAlignment="Stretch" Content="{ Binding RootSite }"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -77,11 +81,11 @@
                     <GridViewColumn>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Button Style="{ StaticResource ButtonBase }"
+                                <Button Style="{ StaticResource ButtonImage }"
                                         ToolTip="Add a new site"
                                         HorizontalAlignment="Center"
                                         Command="{ Binding ElementName=Main, Path=DataContext.RemoveSiteCommand}" CommandParameter="{ Binding }">
-                                    <Image Height="30" Width="30" Source="../Resources/remove.png"/>
+                                    <Image Style="{ StaticResource ImageForButton }" Source="{ StaticResource RemoveImage }"/>
                                 </Button>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

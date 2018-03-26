@@ -3,7 +3,66 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
-    <Grid>
-            
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Assests/ResourceDictionaryBase.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="35"/>
+            <RowDefinition  Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Save to folder:"/>
+        <Grid Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" Grid.Row="0" Text="{ Binding SaveToFolder }" Style="{ StaticResource TextBoxDisableStyle }"/>
+            <Button Grid.Column="1" 
+                    Grid.Row="0" 
+                    Command="{Binding Path=ChooseFolderCommand}" Style="{ StaticResource ButtonImage }" HorizontalAlignment="Right">
+                <Image Source="{ StaticResource FolderImage }"  Style="{ StaticResource ImageForButton }"/>
+            </Button>
+        </Grid>
+
+        <GroupBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Header="Folder" Padding="10,5">
+            <Grid DataContext="{ Binding Folder }">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition  Height="35"/>
+                    <RowDefinition  Height="35"/>
+                    <RowDefinition  Height="35"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Content="Css: " Margin="0,5,0,5"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{ Binding Css }" Style="{ StaticResource TextboxStyle }" Margin="0,5,0,5"/>
+                <Label Grid.Row="0" Grid.Column="3" Content="Js: " Margin="0,5,0,5"/>
+                <TextBox Grid.Row="0" Grid.Column="4" Text="{ Binding Js }" Style="{ StaticResource TextboxStyle }" Margin="0,5,0,5"/>
+
+                <Label Grid.Row="1" Grid.Column="0" Content="Images: "/>
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{ Binding Image }" Style="{ StaticResource TextboxStyle }" Margin="0,5,0,5"/>
+                <Label Grid.Row="1" Grid.Column="3" Content="Fonts: " Margin="0,5,0,5"/>
+                <TextBox Grid.Row="1" Grid.Column="4" Text="{ Binding Font }" Style="{ StaticResource TextboxStyle }" Margin="0,5,0,5"/>
+
+                <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="5" HorizontalAlignment="Right" Style="{ StaticResource ButtonBase }" Command="{ Binding SaveFolderSettingsCommand }">
+                    <Image Source="{ StaticResource SaveImage }" />
+                </Button>
+            </Grid>
+        </GroupBox>
     </Grid>
 </UserControl>

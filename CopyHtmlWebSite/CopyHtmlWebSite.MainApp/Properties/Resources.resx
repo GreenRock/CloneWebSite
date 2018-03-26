@@ -157,4 +157,7 @@
   <data name="NameExist" xml:space="preserve">
     <value>Page name exist. Please choose an others</value>
   </data>
+  <data name="DialogChooseFolderDescription" xml:space="preserve">
+    <value>Please choose a folder</value>
+  </data>
 </root>

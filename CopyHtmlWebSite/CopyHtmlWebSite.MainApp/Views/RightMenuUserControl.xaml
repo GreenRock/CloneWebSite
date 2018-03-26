@@ -8,13 +8,13 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Assests/ResourceDictionaryBase.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style x:Key="ButtonImageStartStyle" TargetType="Image">
+            <Style x:Key="ButtonImageStartStyle" TargetType="Image" BasedOn="{ StaticResource ImageForButton }">
                 <Style.Triggers>
                     <DataTrigger Binding="{ Binding IsStart }" Value="False">
-                        <Setter Property="Image.Source" Value="../Resources/start.png" />
+                        <Setter Property="Image.Source" Value="{ StaticResource StartImage }" />
                     </DataTrigger>
                     <DataTrigger Binding="{ Binding IsStart }" Value="True">
-                        <Setter Property="Image.Source" Value="../Resources/stop.ico" />
+                        <Setter Property="Image.Source" Value="{ StaticResource StopImage }" />
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
@@ -28,19 +28,19 @@
                 <RowDefinition Height="40" />
                 <RowDefinition Height="40" />
             </Grid.RowDefinitions>
-            <Button Command="{ Binding HomeCommand }" Grid.Row="0" Style="{ StaticResource ButtonBase }" ToolTip="Home">
-                <Image Source="../Resources/Home.png" Height="30" Width="30" Style="{ StaticResource ButtonImageStartStyle }"/>
+            <Button Command="{ Binding HomeCommand }" Grid.Row="0" Style="{ StaticResource ButtonImage }" ToolTip="Home">
+                <Image Source="{StaticResource HomeImage }"  Style="{ StaticResource ImageForButton }"/>
             </Button>
-            <Button Command="{ Binding StartCommand }" Grid.Row="1" Style="{ StaticResource ButtonBase }" ToolTip="Start">
-                <Image Source="../Resources/start.png" Height="30" Width="30" Style="{ StaticResource ButtonImageStartStyle }"/>
-            </Button>
-
-            <Button Command="{ Binding AddNewSiteCommand }" Grid.Row="2" Style="{ StaticResource ButtonBase }" ToolTip="Create a new site">
-                <Image Height="30" Width="30" Source="../Resources/create_new.png"/>
+            <Button Command="{ Binding StartCommand }" Grid.Row="1" Style="{ StaticResource ButtonImage }" ToolTip="Start">
+                <Image Source="{ StaticResource StartImage }" Style="{ StaticResource ButtonImageStartStyle }"/>
             </Button>
 
-            <Button Command="{ Binding SettingsCommand }" Grid.Row="3" Style="{ StaticResource ButtonBase }" ToolTip="Settins">
-                <Image Height="30" Width="30" Source="../Resources/settings.png"/>
+            <Button Command="{ Binding AddNewSiteCommand }" Grid.Row="2" Style="{ StaticResource ButtonImage }" ToolTip="Create a new site">
+                <Image Source="{ StaticResource CreateNewImage }"  Style="{ StaticResource ImageForButton }" />
+            </Button>
+
+            <Button Command="{ Binding SettingsCommand }" Grid.Row="3" Style="{ StaticResource ButtonImage }" ToolTip="Settins">
+                <Image Source="{ StaticResource SettingsImage }"  Style="{ StaticResource ImageForButton }" />
             </Button>
         </Grid>
     </Grid>

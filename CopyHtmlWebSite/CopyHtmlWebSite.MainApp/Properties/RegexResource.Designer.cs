@@ -79,15 +79,6 @@ namespace CopyHtmlWebSite.MainApp.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;|&quot;.
-        /// </summary>
-        internal static string FlashAfterAndBeforeUrl {
-            get {
-                return ResourceManager.GetString("FlashAfterAndBeforeUrl", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to data:(?&lt;mime&gt;[\w/\-\.]+);(?&lt;encoding&gt;\w+),(?&lt;data&gt;.*).
         /// </summary>
         internal static string ImageBase64 {
@@ -106,11 +97,29 @@ namespace CopyHtmlWebSite.MainApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to /$.
+        /// </summary>
+        internal static string LastSlashCharacter {
+            get {
+                return ResourceManager.GetString("LastSlashCharacter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ../.
         /// </summary>
         internal static string PrefixLink {
             get {
                 return ResourceManager.GetString("PrefixLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to \s+.
+        /// </summary>
+        internal static string Space {
+            get {
+                return ResourceManager.GetString("Space", resourceCulture);
             }
         }
         
@@ -138,6 +147,15 @@ namespace CopyHtmlWebSite.MainApp.Properties {
         internal static string UrlImageInCss {
             get {
                 return ResourceManager.GetString("UrlImageInCss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;|&quot;.
+        /// </summary>
+        internal static string UrlIntoQuotation {
+            get {
+                return ResourceManager.GetString("UrlIntoQuotation", resourceCulture);
             }
         }
     }

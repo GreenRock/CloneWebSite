@@ -1,7 +1,7 @@
 ﻿namespace CopyHtmlWebSite.MainApp.Services.Converts.Profiles
 {
     using AutoMapper;
-    using Models;
+    using Core.Models;
     using ViewModels;
 
     public class ViewModelToModelProfile : Profile

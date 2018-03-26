@@ -9,14 +9,8 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Assests/ResourceDictionaryBase.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Style x:Key="TextBoxStyle" TargetType="TextBox" BasedOn="{ StaticResource TextboxStyle }">
                 <Setter Property="Margin" Value="5"/>
-                <Setter Property="Height" Value="30"/>
-                <Setter Property="VerticalContentAlignment" Value="Center"/>
-            </Style>
-            <Style x:Key="LabelStyle" TargetType="Label">
-                <Setter Property="Margin" Value="5"/>
-                <Setter Property="HorizontalContentAlignment" Value="Center"/>
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -27,71 +21,80 @@
                 <RowDefinition  Height="40"/>
                 <RowDefinition  Height="*"/>
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="8*"/>
-                <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="50"/>
-            </Grid.ColumnDefinitions>
 
-            <Label Content="Site name:"  
-               Grid.Row="0" 
-               Grid.Column="0"
-               Style="{ StaticResource LabelStyle }"/>
-            <TextBox Grid.Row="0" 
-                 Grid.Column="1" 
-                 Text="{ Binding SiteName }" 
-                 Style="{ StaticResource TextBoxStyle }">
-                <controls:WatermarkService.Watermark>
-                    <TextBlock>Site name</TextBlock>
-                </controls:WatermarkService.Watermark>
-            </TextBox>
-            <Button Grid.Row="0" 
-                Grid.Column="2"
-                Style="{ StaticResource ButtonBase }"
-                ToolTip="Add a new site"
-                Command="{ Binding AddSiteCommand }">
-                <Image Height="30" Width="30" Source="../Resources/save.png"/>
-            </Button>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Row="0" 
+                         Grid.Column="0" 
+                         Text="{ Binding SiteName }" 
+                         Style="{ StaticResource TextBoxStyle }">
+                    <controls:WatermarkService.Watermark>
+                        <TextBlock>Site name (Ex: SiteDemo)</TextBlock>
+                    </controls:WatermarkService.Watermark>
+                </TextBox>
+                <TextBox Grid.Row="0" 
+                         Grid.Column="1" 
+                         Text="{ Binding RootSite }" 
+                         Style="{ StaticResource TextBoxStyle }">
+                    <controls:WatermarkService.Watermark>
+                        <TextBlock>Root site (Ex: http://www.google.com)</TextBlock>
+                    </controls:WatermarkService.Watermark>
+                </TextBox>
+                <Button Grid.Row="0" 
+                        Grid.Column="2"
+                        Style="{ StaticResource ButtonBase }"
+                        ToolTip="Add a new site"
+                        Command="{ Binding AddSiteCommand }">
+                    <Image Style="{ StaticResource ImageForButton }" Source="{ StaticResource SaveImage }"/>
+                </Button>
+            </Grid>
+           
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{ Binding Page.PageName }" 
+                         Grid.Column="0" 
+                         Style="{ StaticResource TextBoxStyle }">
+                    <controls:WatermarkService.Watermark>
+                        <TextBlock>Page name: (Ex: Index)</TextBlock>
+                    </controls:WatermarkService.Watermark>
+                </TextBox>
+                <TextBox Text="{ Binding Page.PageSource }"
+                         Grid.Column="1" 
+                         Style="{ StaticResource TextBoxStyle }">
+                    <controls:WatermarkService.Watermark>
+                        <TextBlock>Page link: (Ex: http://www.google.com/Index)</TextBlock>
+                    </controls:WatermarkService.Watermark>
+                </TextBox>
 
-            <TextBox Text="{ Binding Page.PageName }" 
-                 Grid.Row="1" 
-                 Grid.Column="0" 
-                 Style="{ StaticResource TextBoxStyle }">
-                <controls:WatermarkService.Watermark>
-                    <TextBlock>Page name</TextBlock>
-                </controls:WatermarkService.Watermark>
-            </TextBox>
-            <TextBox Text="{ Binding Page.PageSource }"
-                 Grid.Row="1" 
-                 Grid.Column="1" 
-                 Style="{ StaticResource TextBoxStyle }">
-                <controls:WatermarkService.Watermark>
-                    <TextBlock>Page link</TextBlock>
-                </controls:WatermarkService.Watermark>
-            </TextBox>
+                <Button Grid.Column="2" 
+                        Command="{ Binding AddNewPageCommand }" 
+                        Style="{ StaticResource ButtonBase }" 
+                        ToolTip="Add a new page">
+                    <Image Style="{ StaticResource ImageForButton }" Source="{ StaticResource AddImage }"/>
+                </Button>
 
-            <Button Grid.Row="1" 
-                Grid.Column="2" 
-                Command="{ Binding AddNewPageCommand }" 
-                Style="{ StaticResource ButtonBase }" 
-                ToolTip="Add a new page">
-                <Image Height="30" Width="30" Source="../Resources/add.png"/>
-            </Button>
+                <Button Grid.Column="3" 
+                        Command="{ Binding ShowPageSourceCommand }" 
+                        Style="{ StaticResource ButtonBase }" 
+                        ToolTip="Add a new page">
+                    <Image Style="{ StaticResource ImageForButton }" Source="{ StaticResource AddHtmlImage }"/>
+                </Button>
+            </Grid>
 
-            <Button Grid.Row="1" 
-                Grid.Column="3" 
-                Command="{ Binding ShowPageSourceCommand }" 
-                Style="{ StaticResource ButtonBase }" 
-                ToolTip="Add a new page">
-                <Image Height="30" Width="30" Source="../Resources/add_html.png"/>
-            </Button>
-
-            <ListView Grid.Row="2" 
-                  Grid.Column="0" 
-                  Grid.ColumnSpan="4" 
-                  ItemsSource="{ Binding Pages }" 
-                  HorizontalAlignment="Stretch">
+            <ListView Margin="5,0,0,0" 
+                      Grid.Row="2" 
+                      Grid.Column="0" 
+                      ItemsSource="{ Binding Pages }" 
+                      HorizontalAlignment="Stretch">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Width="100">
@@ -139,7 +142,7 @@
                                         ToolTip="Remove"
                                         HorizontalAlignment="Center"
                                         Command="{ Binding ElementName=CreateNewSite, Path=DataContext.RemovePageCommand}" CommandParameter="{ Binding }">
-                                        <Image Height="30" Width="30" Source="../Resources/remove.png"/>
+                                        <Image Style="{ StaticResource ImageForButton }" Source="{ StaticResource RemoveImage }"/>
                                     </Button>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
@@ -185,7 +188,7 @@
                         Style="{ StaticResource ButtonBase }" 
                         Command="{ Binding AddPageWithSourceCommand }"
                         ToolTip="Add a new page">
-                        <Image Height="30" Width="30" Source="../Resources/add.png"/>
+                        <Image Style="{ StaticResource ImageForButton }" Source="{ StaticResource AddImage }"/>
                     </Button>
                     <TextBox Text="{ Binding Page.PageSource }" 
                          Grid.Row="1" 

@@ -123,17 +123,20 @@
   <data name="ContentImageInCss" xml:space="preserve">
     <value>(["|'|\\])</value>
   </data>
-  <data name="FlashAfterAndBeforeUrl" xml:space="preserve">
-    <value>'|"</value>
-  </data>
   <data name="ImageBase64" xml:space="preserve">
     <value>data:(?&lt;mime&gt;[\w/\-\.]+);(?&lt;encoding&gt;\w+),(?&lt;data&gt;.*)</value>
   </data>
   <data name="ImageInCss" xml:space="preserve">
     <value>@import ([""'])(?&lt;url&gt;[^""']+)\1|url\(([""']?)(?&lt;url&gt;[^""')]+)\2\)</value>
   </data>
+  <data name="LastSlashCharacter" xml:space="preserve">
+    <value>/$</value>
+  </data>
   <data name="PrefixLink" xml:space="preserve">
     <value>../</value>
+  </data>
+  <data name="Space" xml:space="preserve">
+    <value>\s+</value>
   </data>
   <data name="SpecialChar" xml:space="preserve">
     <value>[^0-9a-zA-Z]+</value>
@@ -143,5 +146,8 @@
   </data>
   <data name="UrlImageInCss" xml:space="preserve">
     <value>(url|URL|Url|@import |\(|\)|'|")</value>
+  </data>
+  <data name="UrlIntoQuotation" xml:space="preserve">
+    <value>'|"</value>
   </data>
 </root>

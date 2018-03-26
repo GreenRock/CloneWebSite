@@ -1,8 +1,38 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:CopyHtmlWebSite.MainApp.Assests">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ImageSource x:Key="SaveImage">../Resources/save.png</ImageSource>
+    <ImageSource x:Key="AddHtmlImage">../Resources/add_html.png</ImageSource>
+    <ImageSource x:Key="AddImage">../Resources/add.png</ImageSource>
+    <ImageSource x:Key="RemoveImage">../Resources/remove.png</ImageSource>
+    <ImageSource x:Key="FolderImage">../Resources/folder.png</ImageSource>
+    <ImageSource x:Key="HomeImage">../Resources/Home.png</ImageSource>
+    <ImageSource x:Key="StartImage">../Resources/start.png</ImageSource>
+    <ImageSource x:Key="StopImage">../Resources/stop.ico</ImageSource>
+    <ImageSource x:Key="CreateNewImage">../Resources/create_new.png</ImageSource>
+    <ImageSource x:Key="SettingsImage">../Resources/settings.png</ImageSource>
     <Style x:Key="ButtonBase" TargetType="Button">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
+    </Style>
+    <Style x:Key="ButtonImage" TargetType="Button" BasedOn="{ StaticResource ButtonBase }">
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="Width" Value="35"/>
+    </Style>
+    <Style x:Key="TextboxStyle" TargetType="TextBox">
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="TextAlignment" Value="Left"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+    <Style x:Key="TextBoxDisableStyle" TargetType="TextBox" BasedOn="{ StaticResource TextboxStyle }">
+        <Setter Property="IsEnabled" Value="False"/>
+        <Setter Property="FontSize" Value="24"/>
+    </Style>
+
+    <Style x:Key="ImageForButton" TargetType="Image">
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="Width" Value="32"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
     </Style>
 </ResourceDictionary>

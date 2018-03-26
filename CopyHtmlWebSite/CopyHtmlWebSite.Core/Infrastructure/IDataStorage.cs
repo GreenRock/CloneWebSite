@@ -1,4 +1,4 @@
-﻿namespace CopyHtmlWebSite.MainApp.Services.DataStorages
+﻿namespace CopyHtmlWebSite.Core.Infrastructure
 {
     using System.Collections.Generic;
     using Models;

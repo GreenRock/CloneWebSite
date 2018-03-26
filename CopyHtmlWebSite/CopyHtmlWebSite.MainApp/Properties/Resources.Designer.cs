@@ -110,6 +110,15 @@ namespace CopyHtmlWebSite.MainApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please choose a folder.
+        /// </summary>
+        internal static string DialogChooseFolderDescription {
+            get {
+                return ResourceManager.GetString("DialogChooseFolderDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap folder {

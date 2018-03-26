@@ -17,14 +17,14 @@
            "Watermark",
            typeof(object),
            typeof(WatermarkService),
-           new FrameworkPropertyMetadata((object)null, new PropertyChangedCallback(OnWatermarkChanged)));
+           new FrameworkPropertyMetadata(null, OnWatermarkChanged));
 
         #region Private Fields
 
         /// <summary>
         /// Dictionary of ItemsControls
         /// </summary>
-        private static readonly Dictionary<object, ItemsControl> itemsControls = new Dictionary<object, ItemsControl>();
+        private static readonly Dictionary<object, ItemsControl> ItemsControls = new Dictionary<object, ItemsControl>();
 
         #endregion
 
@@ -35,7 +35,7 @@
         /// <returns>The value of the Watermark property</returns>
         public static object GetWatermark(DependencyObject d)
         {
-            return (object)d.GetValue(WatermarkProperty);
+            return d.GetValue(WatermarkProperty);
         }
 
         /// <summary>
@@ -76,7 +76,7 @@
 
                 // for Items property  
                 i.ItemContainerGenerator.ItemsChanged += ItemsChanged;
-                itemsControls.Add(i.ItemContainerGenerator, i);
+                ItemsControls.Add(i.ItemContainerGenerator, i);
 
                 // for ItemsSource property  
                 DependencyPropertyDescriptor prop = DependencyPropertyDescriptor.FromProperty(ItemsControl.ItemsSourceProperty, i.GetType());
@@ -151,7 +151,7 @@
         private static void ItemsChanged(object sender, ItemsChangedEventArgs e)
         {
             ItemsControl control;
-            if (itemsControls.TryGetValue(sender, out control))
+            if (ItemsControls.TryGetValue(sender, out control))
             {
                 if (ShouldShowWatermark(control))
                 {
@@ -218,22 +218,21 @@
         /// <returns>true if the watermark should be shown; false otherwise</returns>
         private static bool ShouldShowWatermark(Control c)
         {
-            if (c is ComboBox)
+            if (c is ComboBox box)
             {
-                return (c as ComboBox).Text == string.Empty;
+                return box.Text == string.Empty;
             }
-            else if (c is TextBoxBase)
+
+            if (c is TextBoxBase)
             {
-                return (c as TextBox).Text == string.Empty;
+                return (c as TextBox)?.Text == string.Empty;
             }
-            else if (c is ItemsControl)
+
+            if (c is ItemsControl control)
             {
-                return (c as ItemsControl).Items.Count == 0;
+                return control.Items.Count == 0;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         #endregion

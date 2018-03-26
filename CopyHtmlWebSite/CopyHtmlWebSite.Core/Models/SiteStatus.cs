@@ -1,4 +1,4 @@
-﻿namespace CopyHtmlWebSite.MainApp.Models
+﻿namespace CopyHtmlWebSite.Core.Models
 {
     public enum SiteStatus
     {

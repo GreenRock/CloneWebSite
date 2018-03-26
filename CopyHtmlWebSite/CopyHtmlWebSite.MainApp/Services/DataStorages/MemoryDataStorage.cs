@@ -1,7 +1,8 @@
 ﻿namespace CopyHtmlWebSite.MainApp.Services.DataStorages
 {
     using System.Collections.Generic;
-    using Models;
+    using Core.Infrastructure;
+    using Core.Models;
 
     public class MemoryDataStorage : IDataStorage
     {
