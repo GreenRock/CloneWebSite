@@ -14,9 +14,9 @@
             set => SetProperty(ref _isBusy, value, OnIsBusyChanged);
         }
 
-        private void SetBusy(bool val)
+        protected void SetBusy(bool val = true)
         {
-            Application.Current.Dispatcher.Invoke(() => { IsBusy = val; });
+            SetWithTask(() => { IsBusy = val; });
         }
 
         protected virtual void OnIsBusyChanged()
@@ -27,7 +27,7 @@
         {
             try
             {
-                SetBusy(true);
+                SetBusy();
                 return execute();
             }
             catch (Exception ex)
@@ -36,13 +36,23 @@
             }
             finally
             {
-                SetBusy(false);
+                ClearBusy();
             }
+        }
+
+        protected void ClearBusy()
+        {
+            SetBusy(false);
         }
 
         public virtual Task HandleError(Exception ex)
         {
             return Task.CompletedTask;
+        }
+
+        protected void SetWithTask(Action invoke)
+        {
+            Application.Current.Dispatcher.Invoke(invoke);
         }
     }
 }

@@ -3,8 +3,23 @@
     public enum SiteStatus
     {
         Pending,
-        InProgress,
+        BeginLoadResource,
+        EndLoadResource,
+        RemoveBlackList,
+        DownloadCss,
+        DownloadJs,
+        DownloadImage,
+        ReplaceCssInHtml,
+        ReplaceJsInHtml,
+        ReplaceImageInHtml,
+        GetImageInCssFile,
         Done,
-        Error
+        Error,
+        ReplaceImageInCssFile,
+        SaveCss,
+        SaveJs,
+        SaveImage,
+        PrepareToSave,
+        DownloadImageInCssFile
     }
 }

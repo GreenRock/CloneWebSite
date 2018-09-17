@@ -13,11 +13,32 @@
                 <Setter Property="HorizontalAlignment" Value="Stretch"/>
                 <Setter Property="Margin" Value="0, 10,0,0"/>
             </Style>
+            <Style x:Key="ButtonImageStartStyle" TargetType="Image" BasedOn="{ StaticResource ImageForButton }">
+                <Style.Triggers>
+                    <DataTrigger Binding="{ Binding IsStart }" Value="False">
+                        <Setter Property="Image.Source" Value="{ StaticResource StartImage }" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{ Binding IsStart }" Value="True">
+                        <Setter Property="Image.Source" Value="{ StaticResource StopImage }" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            <Style x:Key="StartButtonImage" TargetType="Button" BasedOn="{ StaticResource ButtonImage }">
+                <Style.Triggers>
+                    <DataTrigger Binding="{ Binding IsStart }" Value="False">
+                        <Setter Property="Button.ToolTip" Value="Start" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{ Binding IsStart }" Value="True">
+                        <Setter Property="Button.ToolTip" Value="Stop" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="40"/>
             <ColumnDefinition Width="40"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -26,11 +47,16 @@
         </Grid.RowDefinitions>
         <TextBox Grid.Column="0" Grid.Row="0" Text="{ Binding SaveToFolder }" Style="{ StaticResource TextBoxDisableStyle }" />
         <Button Grid.Column="1" Grid.Row="0" Command="{Binding Path=ChooseFolderCommand}" Style="{ StaticResource ButtonImage }">
-            <Image Source="{ StaticResource FolderImage }" Style="{ StaticResource ImageForButton }"></Image>
+            <Image Source="{ StaticResource FolderImage }" Style="{ StaticResource ImageForButton }"/>
         </Button>
+
+        <Button Grid.Column="2" Grid.Row="0" Command="{ Binding StartCommand }" Style="{ StaticResource StartButtonImage }">
+            <Image Source="{ StaticResource StartImage }" Style="{ StaticResource ButtonImageStartStyle }"/>
+        </Button>
+
         <ListView Grid.Row="1" 
                 Grid.Column="0" 
-                Grid.ColumnSpan="2"
+                Grid.ColumnSpan="3"
                 ItemsSource="{ Binding Sites }" 
                 Style="{ StaticResource ListViewSiteStyle }">
             <ListView.View>

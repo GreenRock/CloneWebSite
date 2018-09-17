@@ -8,16 +8,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Assests/ResourceDictionaryBase.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style x:Key="ButtonImageStartStyle" TargetType="Image" BasedOn="{ StaticResource ImageForButton }">
-                <Style.Triggers>
-                    <DataTrigger Binding="{ Binding IsStart }" Value="False">
-                        <Setter Property="Image.Source" Value="{ StaticResource StartImage }" />
-                    </DataTrigger>
-                    <DataTrigger Binding="{ Binding IsStart }" Value="True">
-                        <Setter Property="Image.Source" Value="{ StaticResource StopImage }" />
-                    </DataTrigger>
-                </Style.Triggers>
-            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -32,19 +22,16 @@
             <Button Command="{ Binding HomeCommand }" Grid.Row="0" Style="{ StaticResource ButtonImage }" ToolTip="Home">
                 <Image Source="{StaticResource HomeImage }"  Style="{ StaticResource ImageForButton }"/>
             </Button>
-            <Button Command="{ Binding StartCommand }" Grid.Row="1" Style="{ StaticResource ButtonImage }" ToolTip="Start">
-                <Image Source="{ StaticResource StartImage }" Style="{ StaticResource ButtonImageStartStyle }"/>
-            </Button>
-
-            <Button Command="{ Binding AddNewSiteCommand }" Grid.Row="2" Style="{ StaticResource ButtonImage }" ToolTip="Create a new site">
+   
+            <Button Command="{ Binding AddNewSiteCommand }" Grid.Row="1" Style="{ StaticResource ButtonImage }" ToolTip="Create a new site">
                 <Image Source="{ StaticResource CreateNewImage }"  Style="{ StaticResource ImageForButton }" />
             </Button>
 
-            <Button Command="{ Binding SettingsCommand }" Grid.Row="3" Style="{ StaticResource ButtonImage }" ToolTip="Settins">
+            <Button Command="{ Binding SettingsCommand }" Grid.Row="2" Style="{ StaticResource ButtonImage }" ToolTip="Settins">
                 <Image Source="{ StaticResource SettingsImage }"  Style="{ StaticResource ImageForButton }" />
             </Button>
 
-            <Button Command="{ Binding AboutCommand }" Grid.Row="4" Style="{ StaticResource ButtonImage }" ToolTip="Settins">
+            <Button Command="{ Binding AboutCommand }" Grid.Row="3" Style="{ StaticResource ButtonImage }" ToolTip="Settins">
                 <Image Source="{ StaticResource ContactImage }"  Style="{ StaticResource ImageForButton }" />
             </Button>
         </Grid>

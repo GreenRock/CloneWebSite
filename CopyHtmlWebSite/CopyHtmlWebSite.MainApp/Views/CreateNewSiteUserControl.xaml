@@ -52,7 +52,7 @@
                     <Image Style="{ StaticResource ImageForButton }" Source="{ StaticResource SaveImage }"/>
                 </Button>
             </Grid>
-           
+
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="3*"/>
@@ -154,20 +154,20 @@
         <Popup 
                 Width="470" 
                 Height="470"   
-                Placement="Center"
+                Placement="Relative"
                 PopupAnimation="Fade"
                 AllowsTransparency="True"
                 IsOpen="{ Binding IsOpenAddSource }">
             <Border Background="GhostWhite" BorderBrush="Silver" BorderThickness="1" CornerRadius="10">
                 <Grid Width="450" Height="450" Background="White">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50"/>
-                        <RowDefinition Height="350"/>
-                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="300" />
+                        <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="50" />
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" 
@@ -178,9 +178,10 @@
                     <TextBox Text="{ Binding Page.PageName }" 
                          Grid.Row="0" 
                          Grid.Column="1" 
+                         Height="30"
                          Style="{ StaticResource TextBoxStyle }">
                         <controls:WatermarkService.Watermark>
-                            <TextBlock>Page name</TextBlock>
+                            <TextBlock>Page name: (Ex: Index)</TextBlock>
                         </controls:WatermarkService.Watermark>
                     </TextBox>
                     <Button Grid.Row="0" 
@@ -197,13 +198,11 @@
                          Height="Auto"
                          VerticalAlignment="Stretch"
                          VerticalContentAlignment="Top"
-                         HorizontalAlignment="Stretch"
-                         HorizontalContentAlignment="Left"
                          TextWrapping="Wrap"
                          AcceptsReturn="True"
                          Style="{ StaticResource TextBoxStyle }">
                         <controls:WatermarkService.Watermark>
-                            <TextBlock>Page Source</TextBlock>
+                            <TextBlock>Page Source (Source html)</TextBlock>
                         </controls:WatermarkService.Watermark>
                     </TextBox>
                     <Button Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2" Command="{ Binding ShowPageSourceCommand }">Close</Button>

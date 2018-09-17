@@ -1,15 +1,18 @@
 ﻿namespace CopyHtmlWebSite.MainApp.ViewModels
 {
-    using System.Windows;
     using Prism.Commands;
     using System.Windows.Input;
+    using Core.Models;
     using Prism.Regions;
+    using Services.SiteFactories;
     using ViewModelBases;
     using Views;
 
     public class RightMenuUserControlViewModel : NavigationViewModelBase
     {
-        public RightMenuUserControlViewModel(IRegionManager regionManager) 
+
+        public RightMenuUserControlViewModel(
+            IRegionManager regionManager)
             : base(regionManager)
         {
 
@@ -18,42 +21,37 @@
         private ICommand _homeCommand;
 
         public ICommand HomeCommand => _homeCommand ?? (_homeCommand =
-                                        new DelegateCommand(() => NavigateTo(nameof(MainUserControl)), () => !IsStart && !IsBusy)
-                                            .ObservesProperty(() => IsBusy)
-                                            .ObservesProperty(() => IsStart));
-
-        private ICommand _startCommand;
-
-        public ICommand StartCommand => _startCommand ?? (_startCommand =
-                                        new DelegateCommand(() => SetIsStart(!IsStart), () => !IsBusy)
+                                        new DelegateCommand(() => NavigateTo(nameof(MainUserControl)), () => !IsBusy)
                                             .ObservesProperty(() => IsBusy));
 
-        private bool _isStart;
-        public bool IsStart
+        
+
+        private void OnFinish(SiteModel siteModel, FinishedSiteResult finishedSiteResult)
         {
-            get => _isStart;
-            set => SetProperty(ref _isStart, value);
+         
         }
 
-        private void SetIsStart(bool val)
+        private void OnStart(SiteModel siteModel)
         {
-            Application.Current.Dispatcher.Invoke(() => { IsStart = val; });
+           
         }
 
+        private void OnError(SiteModel siteModel, string messageError)
+        {
+            
+        }
 
         private ICommand _addNewSiteCommand;
 
         public ICommand AddNewSiteCommand => _addNewSiteCommand ?? (_addNewSiteCommand =
-                                        new DelegateCommand(() => NavigateTo(nameof(CreateNewSiteUserControl)), () => !IsStart && !IsBusy)
-                                            .ObservesProperty(() => IsBusy)
-                                            .ObservesProperty(() => IsStart));
+                                        new DelegateCommand(() => NavigateTo(nameof(CreateNewSiteUserControl)), () => !IsBusy)
+                                            .ObservesProperty(() => IsBusy));
 
         private ICommand _settingsCommand;
 
         public ICommand SettingsCommand => _settingsCommand ?? (_settingsCommand =
-                                        new DelegateCommand(() => NavigateTo(nameof(SettingsUserControl)), () => !IsStart && !IsBusy)
-                                            .ObservesProperty(() => IsBusy)
-                                            .ObservesProperty(() => IsStart));
+                                        new DelegateCommand(() => NavigateTo(nameof(SettingsUserControl)), () => !IsBusy)
+                                            .ObservesProperty(() => IsBusy));
 
         private ICommand _aboutCommand;
 

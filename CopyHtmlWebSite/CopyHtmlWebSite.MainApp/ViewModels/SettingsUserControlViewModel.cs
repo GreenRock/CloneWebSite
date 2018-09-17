@@ -1,11 +1,9 @@
-﻿using Prism.Commands;
-namespace CopyHtmlWebSite.MainApp.ViewModels
+﻿namespace CopyHtmlWebSite.MainApp.ViewModels
 {
-    using System.Windows.Data;
     using System.Windows.Input;
     using Core.Extensions;
+    using Prism.Commands;
     using Prism.Regions;
-    using Properties;
     using Services.DialogServices;
     using Services.SettingsServices;
     using ViewModelBases;
@@ -68,10 +66,18 @@ namespace CopyHtmlWebSite.MainApp.ViewModels
 
         private void ExecuteSaveFolderSettingsCommand()
         {
-            _settingsService.UpdateSettingsByKey(SettingsConst.Folder.CssFolder, Folder.Css);
-            _settingsService.UpdateSettingsByKey(SettingsConst.Folder.JsFolder, Folder.Js);
-            _settingsService.UpdateSettingsByKey(SettingsConst.Folder.ImageFolder, Folder.Image);
-            _settingsService.UpdateSettingsByKey(SettingsConst.Folder.FontFolder, Folder.Font);
+            try
+            {
+                SetBusy(true);
+                _settingsService.UpdateSettingsByKey(SettingsConst.Folder.CssFolder, Folder.Css);
+                _settingsService.UpdateSettingsByKey(SettingsConst.Folder.JsFolder, Folder.Js);
+                _settingsService.UpdateSettingsByKey(SettingsConst.Folder.ImageFolder, Folder.Image);
+                _settingsService.UpdateSettingsByKey(SettingsConst.Folder.FontFolder, Folder.Font);
+            }
+            finally
+            {
+                SetBusy(false);
+            }
         }
 
         private FolderSettings _folder;
