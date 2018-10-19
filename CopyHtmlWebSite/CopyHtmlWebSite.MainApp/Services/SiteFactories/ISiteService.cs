@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
     using Core.Models;
     
-    public interface IRunGetSite
+    public interface ISiteService
     {
         Action<SiteModel> OnStart { set; get; }
         Action<SiteModel, string> OnError { set; get; }

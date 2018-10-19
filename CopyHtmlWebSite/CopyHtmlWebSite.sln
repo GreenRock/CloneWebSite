@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyHtmlWebSite.MainApp", "CopyHtmlWebSite.MainApp\CopyHtmlWebSite.MainApp.csproj", "{A3AA53DC-082B-44CB-A998-5557F20E7B5E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyHtmlWebSite.Core", "CopyHtmlWebSite.Core\CopyHtmlWebSite.Core.csproj", "{F45A5E5B-0176-4B5E-BA9C-A1674D0460DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CopyHtmlWebSite.Core", "CopyHtmlWebSite.Core\CopyHtmlWebSite.Core.csproj", "{F45A5E5B-0176-4B5E-BA9C-A1674D0460DC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{59341954-69FD-486F-BA9B-8F3665E7E5A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

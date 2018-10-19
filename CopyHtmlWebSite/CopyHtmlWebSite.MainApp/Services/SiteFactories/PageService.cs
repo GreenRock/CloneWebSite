@@ -1,16 +1,17 @@
-﻿using CopyHtmlWebSite.Core.Models;
+﻿using System;
+using CopyHtmlWebSite.Core.Models;
 
 namespace CopyHtmlWebSite.MainApp.Services.SiteFactories
 {
     using System.Threading.Tasks;
     using HtmlAgilityPack;
 
-    public class PageBuilder
+    public class PageService : IDisposable
     {
         private PageModel _page;
         private SiteModel _site;
         private HtmlDocument _htmlSource;
-        public PageBuilder(PageModel page, SiteModel site)
+        public PageService(PageModel page, SiteModel site)
         {
             this._page = page;
             this._site = site;
@@ -106,6 +107,10 @@ namespace CopyHtmlWebSite.MainApp.Services.SiteFactories
         public void PrepareToSave()
         {
             throw new System.NotImplementedException();
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

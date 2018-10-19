@@ -19,7 +19,7 @@ namespace CopyHtmlWebSite.MainApp.ViewModels
 
     public class MainUserControlViewModel : NavigationViewModelBase
     {
-        private readonly IRunGetSite _runGetSite;
+        private readonly ISiteService _siteService;
         private readonly ISettingsService _settingsService;
         private readonly IDialogService _dialogService;
         private readonly IDataStorage _dataStorage;
@@ -27,18 +27,14 @@ namespace CopyHtmlWebSite.MainApp.ViewModels
             IDataStorage dataStorage,
             IDialogService dialogService,
             ISettingsService settingsService,
-            IRunGetSite runGetSite)
+            ISiteService siteService)
             : base(regionManager)
         {
             _dataStorage = dataStorage;
             _dialogService = dialogService;
             _settingsService = settingsService;
             _dataStorage = dataStorage;
-            _runGetSite = runGetSite;
-            _runGetSite.OnStart += OnStart;
-            _runGetSite.OnError += OnError;
-            _runGetSite.OnFinish += OnFinish;
-            _runGetSite.OnStatusChanged += OnStatusChanged;
+            _siteService = siteService;
             Sites = new ObservableCollection<SiteModel>();
         }
 
@@ -155,8 +151,7 @@ namespace CopyHtmlWebSite.MainApp.ViewModels
                 var sites = _dataStorage.GetSites();
                 foreach (var site in sites)
                 {
-                    IRunGetSite runGetSite = _runGetSite;
-                    await runGetSite.Run(site);
+                    await _siteService.Run(site);
                 }
             }
             catch (Exception ex)
@@ -178,26 +173,6 @@ namespace CopyHtmlWebSite.MainApp.ViewModels
         private void ClearStart()
         {
             SetWithTask(() => { IsStart = false; });
-        }
-
-        private void OnFinish(SiteModel site, FinishedSiteResult result)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void OnError(SiteModel site, string errorMessage)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void OnStart(SiteModel site)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void OnStatusChanged(SiteModel site, SiteStatus status)
-        {
-            throw new NotImplementedException();
         }
     }
 }
