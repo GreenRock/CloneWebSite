@@ -1,7 +1,8 @@
 ﻿<UserControl x:Class="CopyHtmlWebSite.MainApp.Views.RightMenuUserControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:prism="http://prismlibrary.com/"             
+             xmlns:prism="http://prismlibrary.com/"       
+
              prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -11,29 +12,15 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <Grid RowSpan="20">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
-                <RowDefinition Height="40" />
-            </Grid.RowDefinitions>
-            <Button Command="{ Binding HomeCommand }" Grid.Row="0" Style="{ StaticResource ButtonImage }" ToolTip="Home">
-                <Image Source="{StaticResource HomeImage }"  Style="{ StaticResource ImageForButton }"/>
-            </Button>
-   
-            <Button Command="{ Binding AddNewSiteCommand }" Grid.Row="1" Style="{ StaticResource ButtonImage }" ToolTip="Create a new site">
-                <Image Source="{ StaticResource CreateNewImage }"  Style="{ StaticResource ImageForButton }" />
-            </Button>
-
-            <Button Command="{ Binding SettingsCommand }" Grid.Row="2" Style="{ StaticResource ButtonImage }" ToolTip="Settins">
-                <Image Source="{ StaticResource SettingsImage }"  Style="{ StaticResource ImageForButton }" />
-            </Button>
-
-            <Button Command="{ Binding AboutCommand }" Grid.Row="3" Style="{ StaticResource ButtonImage }" ToolTip="Settins">
-                <Image Source="{ StaticResource ContactImage }"  Style="{ StaticResource ImageForButton }" />
-            </Button>
-        </Grid>
+        <ListView ItemsSource="{ Binding Items }"
+                  BorderBrush="Transparent">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Button Style="{ StaticResource ButtonImage }" ToolTip="{ Binding Display }" Command="{ Binding DataContext.ItemSelectedCommand, RelativeSource={RelativeSource AncestorType=UserControl} }" CommandParameter="{ Binding . }">
+                        <Image Source="{ Binding Image }"  Style="{ StaticResource ImageForButton }"/>
+                    </Button>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </UserControl>

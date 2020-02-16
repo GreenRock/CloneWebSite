@@ -193,4 +193,25 @@
   <data name="UrlIgnoreLabel" xml:space="preserve">
     <value>Url</value>
   </data>
+  <data name="AboutMe" xml:space="preserve">
+    <value>About me</value>
+  </data>
+  <data name="AboutToolTip" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="CreateANewSiteToolTip" xml:space="preserve">
+    <value>Create a new site</value>
+  </data>
+  <data name="EmailLabel" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="HomeToolTip" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="NameLabel" xml:space="preserve">
+    <value>Name:</value>
+  </data>
+  <data name="SettingsToolTip" xml:space="preserve">
+    <value>Settings</value>
+  </data>
 </root>

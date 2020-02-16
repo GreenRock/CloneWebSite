@@ -11,9 +11,29 @@
     <ImageSource x:Key="CreateNewImage">../Resources/create_new.png</ImageSource>
     <ImageSource x:Key="SettingsImage">../Resources/settings.png</ImageSource>
     <ImageSource x:Key="ContactImage">../Resources/contact.png</ImageSource>
+
     <Style x:Key="ButtonBase" TargetType="Button">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <ContentPresenter x:Name="contentPresenter" 
+                                              ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                              Content="{TemplateBinding Content}" 
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              Margin="{TemplateBinding Padding}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
     </Style>
     <Style x:Key="ButtonImage" TargetType="Button" BasedOn="{ StaticResource ButtonBase }">
         <Setter Property="Height" Value="35"/>
@@ -36,4 +56,5 @@
         <Setter Property="Width" Value="32"/>
         <Setter Property="HorizontalAlignment" Value="Center"/>
     </Style>
+
 </ResourceDictionary>

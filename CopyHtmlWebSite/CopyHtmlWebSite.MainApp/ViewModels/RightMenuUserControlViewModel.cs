@@ -1,4 +1,11 @@
-﻿namespace CopyHtmlWebSite.MainApp.ViewModels
+﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using CopyHtmlWebSite.MainApp.Extensions;
+using CopyHtmlWebSite.MainApp.Helpers;
+using CopyHtmlWebSite.MainApp.Models;
+using CopyHtmlWebSite.MainApp.Properties;
+
+namespace CopyHtmlWebSite.MainApp.ViewModels
 {
     using Prism.Commands;
     using System.Windows.Input;
@@ -15,31 +22,55 @@
             IRegionManager regionManager)
             : base(regionManager)
         {
-
+            LoadItems();
         }
 
-        private ICommand _homeCommand;
+        public ObservableCollection<MenuItemModel> Items { get; } = new ObservableCollection<MenuItemModel>();
 
-        public ICommand HomeCommand => _homeCommand ?? (_homeCommand =
-                                        new DelegateCommand(() => NavigateTo(nameof(MainUserControl)), () => !IsBusy)
+        private void LoadItems()
+        {
+            Items.Add(new MenuItemModel
+            {
+                Image = Resources.home.GetBitmapSource(),
+                Display = Resources.HomeToolTip,
+                PageName = PageConstants.MainUserControl,
+                Order = 0
+            });
+            Items.Add(new MenuItemModel
+            {
+                Image = Resources.create_new.GetBitmapSource(),
+                Display = Resources.CreateANewSiteToolTip,
+                PageName = PageConstants.CreateNewSite,
+                Order = 5
+            });
+            Items.Add(new MenuItemModel
+            {
+                Image = Resources.settings.GetBitmapSource(),
+                Display = Resources.SettingsToolTip,
+                PageName = PageConstants.Settings,
+                Order = 10
+            });
+            Items.Add(new MenuItemModel
+            {
+                Image = Resources.contact.GetBitmapSource(),
+                Display = Resources.AboutToolTip,
+                PageName = PageConstants.About,
+                Order = 15
+            });
+        }
+
+        private ICommand _itemSelectedCommand;
+        public ICommand ItemSelectedCommand => _itemSelectedCommand ?? (_itemSelectedCommand =
+                                        new DelegateCommand<MenuItemModel>(async item => await ExecuteItemSelectedCommandAsync(item), item => !IsBusy)
                                             .ObservesProperty(() => IsBusy));
 
-        private ICommand _addNewSiteCommand;
-
-        public ICommand AddNewSiteCommand => _addNewSiteCommand ?? (_addNewSiteCommand =
-                                        new DelegateCommand(() => NavigateTo(nameof(CreateNewSiteUserControl)), () => !IsBusy)
-                                            .ObservesProperty(() => IsBusy));
-
-        private ICommand _settingsCommand;
-
-        public ICommand SettingsCommand => _settingsCommand ?? (_settingsCommand =
-                                        new DelegateCommand(() => NavigateTo(nameof(SettingsUserControl)), () => !IsBusy)
-                                            .ObservesProperty(() => IsBusy));
-
-        private ICommand _aboutCommand;
-
-        public ICommand AboutCommand => _aboutCommand ?? (_aboutCommand =
-                                        new DelegateCommand(() => NavigateTo(nameof(AboutUserControl)), () => !IsBusy)
-                                            .ObservesProperty(() => IsBusy));
+        Task ExecuteItemSelectedCommandAsync(MenuItemModel item)
+        {
+            return SafeExecuteInvoke(() =>
+            {
+                NavigateTo(item.PageName);
+                return Task.CompletedTask;
+            });
+        }
     }
 }
