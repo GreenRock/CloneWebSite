@@ -24,23 +24,6 @@
                                         new DelegateCommand(() => NavigateTo(nameof(MainUserControl)), () => !IsBusy)
                                             .ObservesProperty(() => IsBusy));
 
-        
-
-        private void OnFinish(SiteModel siteModel, FinishedSiteResult finishedSiteResult)
-        {
-         
-        }
-
-        private void OnStart(SiteModel siteModel)
-        {
-           
-        }
-
-        private void OnError(SiteModel siteModel, string messageError)
-        {
-            
-        }
-
         private ICommand _addNewSiteCommand;
 
         public ICommand AddNewSiteCommand => _addNewSiteCommand ?? (_addNewSiteCommand =

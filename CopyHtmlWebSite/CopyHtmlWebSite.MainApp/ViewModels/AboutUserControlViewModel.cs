@@ -1,19 +1,19 @@
-﻿namespace CopyHtmlWebSite.MainApp.ViewModels
+﻿using System.Diagnostics;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using CopyHtmlWebSite.Core.Extensions;
+using Prism.Commands;
+
+namespace CopyHtmlWebSite.MainApp.ViewModels
 {
     using Prism.Regions;
-    using Properties;
     using ViewModelBases;
     public class AboutUserControlViewModel : NavigationViewModelBase
     {
         public AboutUserControlViewModel(IRegionManager regionManager) : base(regionManager)
         {
-        }
-
-        public override void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            base.OnNavigatedTo(navigationContext);
-            Owner = Settings.Default.Owner;
-            Email = Settings.Default.Email;
+            Owner = Properties.Settings.Default.Owner;
+            Email = Properties.Settings.Default.Email;
         }
 
         private string _owner;
@@ -28,6 +28,24 @@
         {
             get => _email;
             set => SetProperty(ref _email, value);
-        }	
+        }
+
+        private ICommand _openMailCommand;
+        public ICommand OpenMailCommand => _openMailCommand ?? (_openMailCommand = new DelegateCommand<string>(ExecuteOpenMailCommand, CanExecuteOpenMailCommand)
+                                        .ObservesProperty(() => IsBusy));
+
+        private bool CanExecuteOpenMailCommand(string email)
+        {
+            return !IsBusy;
+        }
+
+        void ExecuteOpenMailCommand(string email)
+        {
+            SafeExecuteInvoke(() =>
+            {
+                Process.Start($"mailto:{email}");
+                return Task.CompletedTask;
+            });
+        }
     }
 }

@@ -1,8 +1,11 @@
 ﻿<unity:PrismApplication x:Class="CopyHtmlWebSite.MainApp.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:unity="http://prismlibrary.com/">
+             xmlns:unity="http://prismlibrary.com/"
+             xmlns:valueConverter="clr-namespace:CopyHtmlWebSite.MainApp.ValueConverter">
     <Application.Resources>
-
+       <ResourceDictionary>
+           <valueConverter:InvertBooleanConvert x:Key="InvertBooleanConvert"/>
+        </ResourceDictionary>
     </Application.Resources>
 </unity:PrismApplication>

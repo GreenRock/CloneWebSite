@@ -1,4 +1,6 @@
-﻿namespace CopyHtmlWebSite.MainApp.ViewModels
+﻿using System.Threading.Tasks;
+
+namespace CopyHtmlWebSite.MainApp.ViewModels
 {
     using System;
     using System.Collections.ObjectModel;
@@ -87,39 +89,49 @@
 
         private DelegateCommand _addSiteCommand;
         public DelegateCommand AddSiteCommand => _addSiteCommand ?? (_addSiteCommand =
-                                              new DelegateCommand(ExecuteAddSiteCommand,
-                                                      () => !IsBusy
-                                                            && SiteName.HasText()
-                                                            && Pages.Any())
+                                              new DelegateCommand(ExecuteAddSiteCommand, CanExecuteAddSiteCommand)
                                                   .ObservesProperty(() => IsBusy)
                                                   .ObservesProperty(() => SiteName));
 
+        private bool CanExecuteAddSiteCommand()
+        {
+            return !IsBusy && SiteName.HasText() && Pages.Any();
+        }
+
         private void ExecuteAddSiteCommand()
         {
-            var siteModel = new SiteModel
+            SafeExecuteInvoke(() =>
             {
-                SiteName = Regex.Replace(SiteName, RegexResource.SpecialChar, string.Empty),
-                Pages = Pages.ToList(),
-                Status = SiteStatus.Pending
-            };
-            if (RootSite.HasText())
-            {
-                siteModel.RootSite = Regex.Replace(RootSite, string.Join("|", RegexResource.Space, RegexResource.UrlIntoQuotation, RegexResource.LastSlashCharacter), string.Empty);
-            }
-            _dataStorage.AddSite(siteModel);
-            NavigateTo(nameof(MainUserControl));
+                var siteModel = new SiteModel
+                {
+                    SiteName = Regex.Replace(SiteName, RegexResource.SpecialChar, string.Empty),
+                    Pages = Pages.ToList(),
+                    Status = SiteStatus.Pending
+                };
+                if (RootSite.HasText())
+                {
+                    siteModel.RootSite = Regex.Replace(RootSite,
+                        string.Join("|", RegexResource.Space, RegexResource.UrlIntoQuotation,
+                            RegexResource.LastSlashCharacter), string.Empty);
+                }
+
+                _dataStorage.AddSite(siteModel);
+                NavigateTo(nameof(MainUserControl));
+                return Task.CompletedTask;
+            });
         }
 
         private DelegateCommand _addNewPageCommand;
 
         public DelegateCommand AddNewPageCommand => _addNewPageCommand ?? (_addNewPageCommand =
-                                        new DelegateCommand(ExecuteAddNewPageCommand,
-                                                () => !IsBusy
-                                                      && Page != null
-                                                      && Page.PageSource.HasText()
-                                                      && Regex.IsMatch(Page.PageSource, RegexResource.Url))
+                                        new DelegateCommand(ExecuteAddNewPageCommand, CanExecuteAddNewPageCommand)
                                             .ObservesProperty(() => IsBusy)
                                             .ObservesProperty(() => Page));
+
+        private bool CanExecuteAddNewPageCommand()
+        {
+            return !IsBusy && Page != null && Page.PageSource.HasText() && Regex.IsMatch(Page.PageSource, RegexResource.Url);
+        }
 
         private void ExecuteAddNewPageCommand()
         {
@@ -130,13 +142,14 @@
 
         private DelegateCommand _addPageWithSourceCommand;
         public DelegateCommand AddPageWithSourceCommand => _addPageWithSourceCommand ?? (_addPageWithSourceCommand =
-                                        new DelegateCommand(ExecuteAddPageWithSourceCommand,
-                                                () => !IsBusy
-                                                      && Page != null
-                                                      && Page.PageName.HasText()
-                                                      && Page.PageSource.HasText())
+                                        new DelegateCommand(ExecuteAddPageWithSourceCommand, CanExecuteAddPageWithSourceCommand)
                                                 .ObservesProperty(() => IsBusy)
                                                 .ObservesProperty(() => Page));
+
+        private bool CanExecuteAddPageWithSourceCommand()
+        {
+            return !IsBusy && Page != null && Page.PageName.HasText() && Page.PageSource.HasText();
+        }
 
         private void ExecuteAddPageWithSourceCommand()
         {

@@ -44,26 +44,22 @@ namespace CopyHtmlWebSite.MainApp.ViewModels
             Init();
         }
 
-        private void Init()
+        private async void Init()
         {
-            try
-            {
-                SetBusy();
-                Sites.Clear();
-                LoadSettings();
-                var sites = _dataStorage.GetSites();
-                if (sites != null)
-                {
-                    foreach (var site in sites)
-                    {
-                        Sites.Add(site);
-                    }
-                }
-            }
-            finally
-            {
-                ClearBusy();
-            }
+            await SafeExecuteInvoke(async () =>
+              {
+                  SetBusy();
+                  Sites.Clear();
+                  await LoadSettings();
+                  var sites = _dataStorage.GetSites();
+                  if (sites != null)
+                  {
+                      foreach (var site in sites)
+                      {
+                          Sites.Add(site);
+                      }
+                  }
+              });
         }
 
         private ICommand _chooseFolderCommand;
@@ -122,9 +118,9 @@ namespace CopyHtmlWebSite.MainApp.ViewModels
             }
         }
 
-        private void LoadSettings()
+        private async Task LoadSettings()
         {
-            SaveToFolder = _settingsService.GetSettingsByKey(SettingsConst.SaveTo);
+            SaveToFolder = await _settingsService.GetSettingSaveTo();
         }
 
         private bool _isStart;
@@ -137,9 +133,14 @@ namespace CopyHtmlWebSite.MainApp.ViewModels
         private ICommand _startCommand;
 
         public ICommand StartCommand => _startCommand ?? (_startCommand =
-                                            new DelegateCommand(async () => await ExecuteStartCommand(), () => !IsBusy && Sites.Any())
+                                            new DelegateCommand(async () => await ExecuteStartCommand(), CanExecuteStartCommand)
                                                 .ObservesProperty(() => IsBusy)
                                                 .ObservesProperty(() => Sites));
+
+        private bool CanExecuteStartCommand()
+        {
+            return !IsBusy && Sites.Any();
+        }
 
         private async Task ExecuteStartCommand()
         {

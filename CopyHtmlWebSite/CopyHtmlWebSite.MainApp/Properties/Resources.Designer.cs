@@ -19,7 +19,7 @@ namespace CopyHtmlWebSite.MainApp.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -91,12 +91,30 @@ namespace CopyHtmlWebSite.MainApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Attributes.
+        /// </summary>
+        internal static string AttributesIgnoreLabel {
+            get {
+                return ResourceManager.GetString("AttributesIgnoreLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap contact {
             get {
                 object obj = ResourceManager.GetObject("contact", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Content.
+        /// </summary>
+        internal static string ContentIgnoreLabel {
+            get {
+                return ResourceManager.GetString("ContentIgnoreLabel", resourceCulture);
             }
         }
         
@@ -111,11 +129,29 @@ namespace CopyHtmlWebSite.MainApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Css:.
+        /// </summary>
+        internal static string CssFolderLabel {
+            get {
+                return ResourceManager.GetString("CssFolderLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please choose a folder.
         /// </summary>
         internal static string DialogChooseFolderDescription {
             get {
                 return ResourceManager.GetString("DialogChooseFolderDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File.
+        /// </summary>
+        internal static string FileIgnoreLabel {
+            get {
+                return ResourceManager.GetString("FileIgnoreLabel", resourceCulture);
             }
         }
         
@@ -130,12 +166,57 @@ namespace CopyHtmlWebSite.MainApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Folder.
+        /// </summary>
+        internal static string FolderGroupLabel {
+            get {
+                return ResourceManager.GetString("FolderGroupLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fonts.
+        /// </summary>
+        internal static string FontsFolderLabel {
+            get {
+                return ResourceManager.GetString("FontsFolderLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap home {
             get {
                 object obj = ResourceManager.GetObject("home", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ignore.
+        /// </summary>
+        internal static string IgnoreGroupLabel {
+            get {
+                return ResourceManager.GetString("IgnoreGroupLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Images.
+        /// </summary>
+        internal static string ImagesFolderLabel {
+            get {
+                return ResourceManager.GetString("ImagesFolderLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Js.
+        /// </summary>
+        internal static string JsFolderLabel {
+            get {
+                return ResourceManager.GetString("JsFolderLabel", resourceCulture);
             }
         }
         
@@ -169,6 +250,15 @@ namespace CopyHtmlWebSite.MainApp.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save to folder:.
+        /// </summary>
+        internal static string SaveToFolderLabel {
+            get {
+                return ResourceManager.GetString("SaveToFolderLabel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap settings {
@@ -195,6 +285,15 @@ namespace CopyHtmlWebSite.MainApp.Properties {
             get {
                 object obj = ResourceManager.GetObject("stop", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Url.
+        /// </summary>
+        internal static string UrlIgnoreLabel {
+            get {
+                return ResourceManager.GetString("UrlIgnoreLabel", resourceCulture);
             }
         }
     }

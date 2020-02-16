@@ -16,11 +16,33 @@
             <Style x:Key="TitleStyle"  TargetType="Label" BasedOn="{ StaticResource TitleStyleBase }">
                 <Setter Property="FontSize" Value="18"/>
             </Style>
-            <Style x:Key="TitleSubLableStyle"  TargetType="Label" >
+            <Style x:Key="TitleSubLabelStyle"  TargetType="Label" >
                 <Setter Property="FontWeight" Value="Bold"/>
             </Style>
             <Style x:Key="TitleSubValueStyle"  TargetType="Label" >
                 <Setter Property="FontStyle" Value="Italic"/>
+            </Style>
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="Background" Value="Transparent"/>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <ContentPresenter x:Name="contentPresenter" 
+                                                          ContentTemplate="{TemplateBinding ContentTemplate}" 
+                                                          Content="{TemplateBinding Content}" 
+                                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                          Margin="{TemplateBinding Padding}" 
+                                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -32,18 +54,33 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="Name:" Grid.Column="0" Style="{ StaticResource TitleSubLableStyle }"></Label>
+                <Label Content="Name:" Grid.Column="0" Style="{ StaticResource TitleSubLabelStyle }"></Label>
                 <Label Content="{ Binding Owner }" Grid.Column="1" Style="{ StaticResource TitleSubValueStyle }"></Label>
             </Grid>
         </Label>
+
         <Label Style="{ StaticResource TitleStyle }">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Label Content="Email:" Grid.Column="0" Style="{ StaticResource TitleSubLableStyle }"></Label>
-                <Label Content="{ Binding Email }" Grid.Column="1" Style="{ StaticResource TitleSubValueStyle }"></Label>
+
+                <Label Content="Email:" Grid.Column="0" Style="{ StaticResource TitleSubLabelStyle }"/>
+
+                <Button  Grid.Column="1" 
+                         BorderThickness="0"
+                         BorderBrush="Transparent"
+                         Background="Transparent"
+                         Command="{ Binding OpenMailCommand }" 
+                         CommandParameter="{ Binding Email }">
+                    <TextBlock TextDecorations="Underline" 
+                               Text="{ Binding Email }" 
+                               Background="Transparent"
+                               Foreground="Blue" 
+                               FontStyle="Italic"/>
+                </Button>
+
             </Grid>
         </Label>
     </StackPanel>

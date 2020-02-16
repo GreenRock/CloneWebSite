@@ -5,6 +5,7 @@ using CopyHtmlWebSite.MainApp.Services.DataStorages;
 using CopyHtmlWebSite.MainApp.Services.DialogServices;
 using CopyHtmlWebSite.MainApp.Services.SettingsServices;
 using CopyHtmlWebSite.MainApp.Services.SiteFactories;
+using CopyHtmlWebSite.MainApp.ViewModels.Settings;
 using CopyHtmlWebSite.MainApp.Views;
 using Prism.Ioc;
 using Prism.Regions;
@@ -34,16 +35,13 @@ namespace CopyHtmlWebSite.MainApp
             containerRegistry.RegisterForNavigation<CreateNewSiteUserControl>(nameof(CreateNewSiteUserControl));
             containerRegistry.RegisterForNavigation<MainUserControl>(nameof(MainUserControl));
             containerRegistry.RegisterForNavigation<RightMenuUserControl>(nameof(RightMenuUserControl));
-            containerRegistry.RegisterForNavigation<SettingsUserControl>(nameof(SettingsUserControl));
+            containerRegistry.RegisterForNavigation<SettingsUserControl, SettingsUserControlViewModel>(nameof(SettingsUserControl));
             containerRegistry.RegisterForNavigation<AboutUserControl>(nameof(AboutUserControl));
         }
 
         protected override void InitializeShell(Window shell)
         {
             base.InitializeShell(shell);
-
-            var settingsService = Container.Resolve<ISettingsService>();
-            settingsService?.InitSettings();
 
             var regionManager = Container.Resolve<IRegionManager>();
             regionManager.RequestNavigate(Regions.MainRegion, nameof(MainUserControl));

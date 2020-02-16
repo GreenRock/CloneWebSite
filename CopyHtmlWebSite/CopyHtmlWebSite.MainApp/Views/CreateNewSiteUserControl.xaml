@@ -9,7 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Assests/ResourceDictionaryBase.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Style x:Key="TextBoxStyle" TargetType="TextBox" BasedOn="{ StaticResource TextboxStyle }">
+            <Style x:Key="TextBoxStyle" TargetType="TextBox" BasedOn="{ StaticResource TextBoxStyle }">
                 <Setter Property="Margin" Value="5"/>
             </Style>
         </ResourceDictionary>

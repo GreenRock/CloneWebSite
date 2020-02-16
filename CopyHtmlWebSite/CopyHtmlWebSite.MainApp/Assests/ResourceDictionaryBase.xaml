@@ -19,16 +19,16 @@
         <Setter Property="Height" Value="35"/>
         <Setter Property="Width" Value="35"/>
     </Style>
-    <Style x:Key="TextboxStyle" TargetType="TextBox">
+    <Style x:Key="TextBoxStyle" TargetType="TextBox">
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="TextAlignment" Value="Left"/>
         <Setter Property="Padding" Value="0"/>
     </Style>
-    <Style x:Key="TextBoxDisableStyle" TargetType="TextBox" BasedOn="{ StaticResource TextboxStyle }">
+    <Style x:Key="TextBoxDisableStyle" TargetType="TextBox" BasedOn="{ StaticResource TextBoxStyle }">
         <Setter Property="IsEnabled" Value="False"/>
-        <Setter Property="FontSize" Value="24"/>
+        <Setter Property="FontSize" Value="20"/>
     </Style>
 
     <Style x:Key="ImageForButton" TargetType="Image">

@@ -12,7 +12,7 @@ namespace CopyHtmlWebSite.MainApp.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.6.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.4.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -37,49 +37,49 @@ namespace CopyHtmlWebSite.MainApp.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Css {
+        [global::System.Configuration.DefaultSettingValueAttribute("css")]
+        public string CssFolder {
             get {
-                return ((string)(this["Css"]));
+                return ((string)(this["CssFolder"]));
             }
             set {
-                this["Css"] = value;
+                this["CssFolder"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Js {
+        [global::System.Configuration.DefaultSettingValueAttribute("js")]
+        public string JsFolder {
             get {
-                return ((string)(this["Js"]));
+                return ((string)(this["JsFolder"]));
             }
             set {
-                this["Js"] = value;
+                this["JsFolder"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Image {
+        [global::System.Configuration.DefaultSettingValueAttribute("images")]
+        public string ImagesFolder {
             get {
-                return ((string)(this["Image"]));
+                return ((string)(this["ImagesFolder"]));
             }
             set {
-                this["Image"] = value;
+                this["ImagesFolder"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Font {
+        [global::System.Configuration.DefaultSettingValueAttribute("fonts")]
+        public string FontsFolder {
             get {
-                return ((string)(this["Font"]));
+                return ((string)(this["FontsFolder"]));
             }
             set {
-                this["Font"] = value;
+                this["FontsFolder"] = value;
             }
         }
         
@@ -116,6 +116,54 @@ namespace CopyHtmlWebSite.MainApp.Properties {
         public string Email {
             get {
                 return ((string)(this["Email"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string IgnoreAttributes {
+            get {
+                return ((string)(this["IgnoreAttributes"]));
+            }
+            set {
+                this["IgnoreAttributes"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string IgnoreFile {
+            get {
+                return ((string)(this["IgnoreFile"]));
+            }
+            set {
+                this["IgnoreFile"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string IgnoreUrl {
+            get {
+                return ((string)(this["IgnoreUrl"]));
+            }
+            set {
+                this["IgnoreUrl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string IgnoreContent {
+            get {
+                return ((string)(this["IgnoreContent"]));
+            }
+            set {
+                this["IgnoreContent"] = value;
             }
         }
     }

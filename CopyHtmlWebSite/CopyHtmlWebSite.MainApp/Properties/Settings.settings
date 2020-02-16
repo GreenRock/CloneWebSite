@@ -5,17 +5,17 @@
     <Setting Name="SaveTo" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="Css" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="CssFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">css</Value>
     </Setting>
-    <Setting Name="Js" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="JsFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">js</Value>
     </Setting>
-    <Setting Name="Image" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="ImagesFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">images</Value>
     </Setting>
-    <Setting Name="Font" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="FontsFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">fonts</Value>
     </Setting>
     <Setting Name="ApplicationName" Type="System.String" Scope="Application">
       <Value Profile="(Default)">Small Start</Value>
@@ -28,6 +28,18 @@
     </Setting>
     <Setting Name="Email" Type="System.String" Scope="Application">
       <Value Profile="(Default)">an.huynhviet@hotmail.com</Value>
+    </Setting>
+    <Setting Name="IgnoreAttributes" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="IgnoreFile" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="IgnoreUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="IgnoreContent" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>
