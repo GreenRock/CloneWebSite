@@ -1,47 +1,29 @@
-﻿namespace CopyHtmlWebSite.MainApp.ViewModels
-{
-    using Core.Extensions;
-    using ViewModelBases;
+﻿using CopyHtmlWebSite.MainApp.ViewModels.ViewModelBases;
+using System;
 
+namespace CopyHtmlWebSite.MainApp.ViewModels
+{
     public class PageViewModel : ViewModelBase
     {
-        private readonly CreateNewSiteUserControlViewModel _vm;
-        public PageViewModel(CreateNewSiteUserControlViewModel vm)
+        private string _id;
+        public string Id
         {
-            _vm = vm;
+            get => _id;
+            set => SetProperty(ref _id, value);
         }
+
         private string _pageName;
         public string PageName
         {
             get => _pageName;
-            set => SetProperty(ref _pageName, value, () =>
-            {
-                var page = _vm.GetPageByName(value);
-                if (page != null)
-                {
-                    var tempPage = string.Empty;
-                    var index = 1;
-                    while (tempPage.HasNotText())
-                    {
-                        tempPage = $"{page.Name}_{index}";
-                        if (_vm.GetPageByName(tempPage) != null)
-                        {
-                            index++;
-                            tempPage = string.Empty;
-                        }
-                    }
-                    _pageName = tempPage;
-                    RaisePropertyChanged(nameof(PageName));
-                }
-                Onchanged();
-            });
+            set => SetProperty(ref _pageName, value, () => PageNameChange?.Invoke(this));
         }
 
         private string _pageSource;
         public string PageSource
         {
             get => _pageSource;
-            set => SetProperty(ref _pageSource, value, Onchanged);
+            set => SetProperty(ref _pageSource, value);
         }
 
         private bool _isHtml;
@@ -54,15 +36,12 @@
         public  void Reset()
         {
             PageName = PageSource = string.Empty;
+
+            Id = string.Empty;
+
+            IsHtml = false;
         }
 
-        private void Onchanged()
-        {
-            _vm.AddNewPageCommand?.RaiseCanExecuteChanged();
-            if (_vm.IsOpenAddSource)
-            {
-                _vm.AddPageWithSourceCommand.RaiseCanExecuteChanged();
-            }
-        }
+        public Action<PageViewModel> PageNameChange;
     }
 }

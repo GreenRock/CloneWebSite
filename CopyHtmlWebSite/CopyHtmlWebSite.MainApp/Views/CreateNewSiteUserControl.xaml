@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:controls="clr-namespace:CopyHtmlWebSite.MainApp.Controls"
-             prism:ViewModelLocator.AutoWireViewModel="True" x:Name="CreateNewSite">
+             prism:ViewModelLocator.AutoWireViewModel="True" 
+             x:Name="CreateNewSite">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -11,22 +12,136 @@
             </ResourceDictionary.MergedDictionaries>
             <Style x:Key="TextBoxStyle" TargetType="TextBox" BasedOn="{ StaticResource TextBoxStyle }">
                 <Setter Property="Margin" Value="5"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <StackPanel>
-        <Grid>
+        <Grid VerticalAlignment="Stretch">
             <Grid.RowDefinitions>
                 <RowDefinition  Height="40"/>
+                <RowDefinition  Height="300"/>
                 <RowDefinition  Height="40"/>
-                <RowDefinition  Height="*"/>
+                <RowDefinition  Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0">
+            <Grid Grid.Row="0" DataContext="{ Binding Page }">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{ Binding PageName }" 
+                         x:Name="TxtPageName"
+                         KeyDown="TxtPage_OnKeyDown"
+                         Grid.Column="0" 
+                         Style="{ StaticResource TextBoxStyle }">
+                    <controls:WatermarkService.Watermark>
+                        <TextBlock>Page name: (Ex: Index)</TextBlock>
+                    </controls:WatermarkService.Watermark>
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Return" Command="{ Binding ElementName=CreateNewSite, Path=DataContext.AddNewPageCommand}"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+
+                <TextBox Text="{ Binding PageSource }"
+                         x:Name="TxtPageSource"
+                         KeyDown="TxtPage_OnKeyDown"
+                         Grid.Column="1" 
+                         Style="{ StaticResource TextBoxStyle }">
+                    <controls:WatermarkService.Watermark>
+                        <TextBlock>Page link: (Ex: http://www.google.com/Index)</TextBlock>
+                    </controls:WatermarkService.Watermark>
+                </TextBox>
+
+                <Button Grid.Column="2" 
+                        Command="{ Binding ElementName=CreateNewSite, Path=DataContext.AddNewPageCommand}"
+                        CommandParameter="{ Binding . }"
+                        x:Name="BtnPage"
+                        Style="{ StaticResource ButtonBase }" 
+                        ToolTip="Add a new page">
+                    <Image Style="{ StaticResource ImageForButton }" Source="{ StaticResource AddImage }"/>
+                </Button>
+
+                <Button Grid.Column="3"  
+                        Command="{ Binding ElementName=CreateNewSite, Path=DataContext.ShowPageSourceCommand}"
+                        CommandParameter="{ Binding . }"
+                        Style="{ StaticResource ButtonBase }" 
+                        ToolTip="Add the source of page">
+                    <Image Style="{ StaticResource ImageForButton }" Source="{ StaticResource AddHtmlImage }"/>
+                </Button>
+            </Grid>
+
+            <ListView Margin="5,10" 
+                      Grid.Row="1" 
+                      ItemsSource="{ Binding PageCollection }" 
+                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                      HorizontalAlignment="Stretch">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="100">
+                            <GridViewColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <Label Padding="10" HorizontalAlignment="Stretch" Content="Page name"/>
+                                </DataTemplate>
+                            </GridViewColumn.HeaderTemplate>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Padding="10" HorizontalAlignment="Stretch" Content="{ Binding PageName }"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="380">
+                            <GridViewColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <Label Padding="10" HorizontalAlignment="Stretch" Content="Page Source"/>
+                                </DataTemplate>
+                            </GridViewColumn.HeaderTemplate>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Padding="10" HorizontalAlignment="Stretch" Content="{ Binding PageSource }"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="60">
+                            <GridViewColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <Label Padding="10" HorizontalAlignment="Stretch" Content="IsHtml"/>
+                                </DataTemplate>
+                            </GridViewColumn.HeaderTemplate>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel HorizontalAlignment="Center" Width="60">
+                                        <CheckBox IsChecked="{ Binding IsHtml }" HorizontalAlignment="Center" IsEnabled="False"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Width="50">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Style="{ StaticResource ButtonBase }"
+                                        ToolTip="Remove"
+                                        HorizontalAlignment="Center"
+                                        Command="{ Binding ElementName=CreateNewSite, Path=DataContext.RemovePageCommand}" 
+                                        CommandParameter="{ Binding .}">
+                                        <Image Style="{ StaticResource ImageForButton }" 
+                                               Height="25" 
+                                               Source="{ StaticResource RemoveImage }"/>
+                                    </Button>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <Grid Grid.Row="2" DataContext="{ Binding Site }">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <TextBox Grid.Row="0" 
                          Grid.Column="0" 
@@ -44,115 +159,19 @@
                         <TextBlock>Root site (Ex: http://www.google.com)</TextBlock>
                     </controls:WatermarkService.Watermark>
                 </TextBox>
-                <Button Grid.Row="0" 
-                        Grid.Column="2"
-                        Style="{ StaticResource ButtonBase }"
-                        ToolTip="Add a new site"
-                        Command="{ Binding AddSiteCommand }">
-                    <Image Style="{ StaticResource ImageForButton }" Source="{ StaticResource SaveImage }"/>
-                </Button>
             </Grid>
 
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
-                    <ColumnDefinition Width="8*"/>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="50"/>
-                </Grid.ColumnDefinitions>
-                <TextBox Text="{ Binding Page.PageName }" 
-                         Grid.Column="0" 
-                         Style="{ StaticResource TextBoxStyle }">
-                    <controls:WatermarkService.Watermark>
-                        <TextBlock>Page name: (Ex: Index)</TextBlock>
-                    </controls:WatermarkService.Watermark>
-                </TextBox>
-                <TextBox Text="{ Binding Page.PageSource }"
-                         Grid.Column="1" 
-                         Style="{ StaticResource TextBoxStyle }">
-                    <controls:WatermarkService.Watermark>
-                        <TextBlock>Page link: (Ex: http://www.google.com/Index)</TextBlock>
-                    </controls:WatermarkService.Watermark>
-                </TextBox>
+            <Button Grid.Row="3" 
+                    Margin="0,10"
+                    Height="50"
+                    ToolTip="Add a new site"
+                    Content="Save"
+                    Command="{ Binding AddSiteCommand}"
+                    CommandParameter="{ Binding Site }">
+            </Button>
 
-                <Button Grid.Column="2" 
-                        Command="{ Binding AddNewPageCommand }" 
-                        Style="{ StaticResource ButtonBase }" 
-                        ToolTip="Add a new page">
-                    <Image Style="{ StaticResource ImageForButton }" Source="{ StaticResource AddImage }"/>
-                </Button>
-
-                <Button Grid.Column="3" 
-                        Command="{ Binding ShowPageSourceCommand }" 
-                        Style="{ StaticResource ButtonBase }" 
-                        ToolTip="Add a new page">
-                    <Image Style="{ StaticResource ImageForButton }" Source="{ StaticResource AddHtmlImage }"/>
-                </Button>
-            </Grid>
-
-            <ListView Margin="5,0,0,0" 
-                      Grid.Row="2" 
-                      Grid.Column="0" 
-                      ItemsSource="{ Binding Pages }" 
-                      HorizontalAlignment="Stretch">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Width="100">
-                            <GridViewColumn.HeaderTemplate>
-                                <DataTemplate>
-                                    <Label Padding="10" HorizontalAlignment="Stretch" Content="Page name"/>
-                                </DataTemplate>
-                            </GridViewColumn.HeaderTemplate>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Label Padding="10" HorizontalAlignment="Stretch" Content="{ Binding Name }"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Width="380">
-                            <GridViewColumn.HeaderTemplate>
-                                <DataTemplate>
-                                    <Label Padding="10" HorizontalAlignment="Stretch" Content="Page Source"/>
-                                </DataTemplate>
-                            </GridViewColumn.HeaderTemplate>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Label Padding="10" HorizontalAlignment="Stretch" Content="{ Binding Source }"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Width="60">
-                            <GridViewColumn.HeaderTemplate>
-                                <DataTemplate>
-                                    <Label Padding="10" HorizontalAlignment="Stretch" Content="IsHtml"/>
-                                </DataTemplate>
-                            </GridViewColumn.HeaderTemplate>
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <StackPanel HorizontalAlignment="Center" Width="60">
-                                        <CheckBox IsChecked="{ Binding IsHtml }" HorizontalAlignment="Center" IsEnabled="False"></CheckBox>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                        <GridViewColumn Width="50">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button Style="{ StaticResource ButtonBase }"
-                                        ToolTip="Remove"
-                                        HorizontalAlignment="Center"
-                                        Command="{ Binding ElementName=CreateNewSite, Path=DataContext.RemovePageCommand}" CommandParameter="{ Binding }">
-                                        <Image Style="{ StaticResource ImageForButton }" Source="{ StaticResource RemoveImage }"/>
-                                    </Button>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
         </Grid>
-        <Popup 
-                Width="470" 
+        <Popup  Width="470" 
                 Height="470"   
                 Placement="Relative"
                 PopupAnimation="Fade"

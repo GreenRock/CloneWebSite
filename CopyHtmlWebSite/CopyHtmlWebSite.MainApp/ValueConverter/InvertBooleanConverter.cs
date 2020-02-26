@@ -1,16 +1,15 @@
-﻿namespace CopyHtmlWebSite.MainApp.ValueConverter
-{
-    using System;
-    using System.Globalization;
-    using System.Windows.Data;
+﻿using System;
+using System.Globalization;
+using System.Windows.Data;
 
-    public class InvertBooleanConvert : IValueConverter
+namespace CopyHtmlWebSite.MainApp.ValueConverter
+{
+    public class InvertBooleanConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value != null)
+            if (value is bool result)
             {
-                bool.TryParse(value.ToString(), out bool result);
                 return !result;
             }
             return false;

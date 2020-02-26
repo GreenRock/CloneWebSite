@@ -1,22 +1,21 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using CopyHtmlWebSite.Core.Extensions;
+using CopyHtmlWebSite.Core.Infrastructure;
+using CopyHtmlWebSite.Core.Models;
+using CopyHtmlWebSite.MainApp.Models;
+using CopyHtmlWebSite.MainApp.Properties;
+using CopyHtmlWebSite.MainApp.ViewModels.ViewModelBases;
+using CopyHtmlWebSite.MainApp.Views;
+using Prism.Commands;
+using Prism.Regions;
+using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Input;
+using CopyHtmlWebSite.Core.Models.Service;
 
 namespace CopyHtmlWebSite.MainApp.ViewModels
 {
-    using System;
-    using System.Collections.ObjectModel;
-    using System.Collections.Specialized;
-    using System.Linq;
-    using System.Text.RegularExpressions;
-    using System.Windows.Input;
-    using Core.Extensions;
-    using Core.Infrastructure;
-    using Core.Models;
-    using Prism.Commands;
-    using Prism.Regions;
-    using Properties;
-    using ViewModelBases;
-    using Views;
-
     public class CreateNewSiteUserControlViewModel : NavigationViewModelBase
     {
         private readonly IDataStorage _dataStorage;
@@ -29,9 +28,16 @@ namespace CopyHtmlWebSite.MainApp.ViewModels
         {
             _dataStorage = dataStorage;
             _converter = converter;
-            Pages = new ObservableCollection<PageModel>();
-            Pages.CollectionChanged -= PagesOnCollectionChanged;
-            Pages.CollectionChanged += PagesOnCollectionChanged;
+
+            Page = new PageViewModel();
+            Site = new SiteViewModel();
+            PageCollection = new PageCollection
+            {
+                OnChanged = args =>
+                {
+                    AddSiteCommand.RaiseCanExecuteChanged();
+                }
+            };
         }
 
         public override void OnNavigatedTo(NavigationContext navigationContext)
@@ -42,14 +48,8 @@ namespace CopyHtmlWebSite.MainApp.ViewModels
 
         private void Init()
         {
-            Pages.Clear();
-            Page = new PageViewModel(this);
-            SiteName = string.Empty;
-        }
-
-        private void PagesOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-        {
-            AddSiteCommand.RaiseCanExecuteChanged();
+            PageCollection.Clear();
+            Page.Reset();
         }
 
         private bool _isOpenAddSource;
@@ -59,135 +59,136 @@ namespace CopyHtmlWebSite.MainApp.ViewModels
             set => SetProperty(ref _isOpenAddSource, value);
         }
 
-        private ObservableCollection<PageModel> _pages;
-        public ObservableCollection<PageModel> Pages
-        {
-            get => _pages;
-            set => SetProperty(ref _pages, value);
-        }
+        public SiteViewModel Site { get; }
 
-        private string _siteName = string.Empty;
-        public string SiteName
-        {
-            get => _siteName;
-            set => SetProperty(ref _siteName, value);
-        }
+        public PageCollection PageCollection { get; }
 
-        private string _rootSite;
-        public string RootSite
-        {
-            get => _rootSite;
-            set => SetProperty(ref _rootSite, value);
-        }
+        public PageViewModel Page { get; set; }
 
-        private PageViewModel _page;
-        public PageViewModel Page
-        {
-            get => _page;
-            set => SetProperty(ref _page, value);
-        }
+        private DelegateCommand<SiteViewModel> _addSiteCommand;
+        public DelegateCommand<SiteViewModel> AddSiteCommand => _addSiteCommand ?? (_addSiteCommand =
+                                              new DelegateCommand<SiteViewModel>(ExecuteAddSiteCommand, item => CanExecuteCommand()).ObservesProperty(() => IsBusy));
 
-        private DelegateCommand _addSiteCommand;
-        public DelegateCommand AddSiteCommand => _addSiteCommand ?? (_addSiteCommand =
-                                              new DelegateCommand(ExecuteAddSiteCommand, CanExecuteAddSiteCommand)
-                                                  .ObservesProperty(() => IsBusy)
-                                                  .ObservesProperty(() => SiteName));
-
-        private bool CanExecuteAddSiteCommand()
+        private async void ExecuteAddSiteCommand(SiteViewModel site)
         {
-            return !IsBusy && SiteName.HasText() && Pages.Any();
-        }
+            if (!CanAddSite(site)) return;
 
-        private void ExecuteAddSiteCommand()
-        {
-            SafeExecuteInvoke(() =>
+            await SafeExecuteInvoke(async () =>
             {
                 var siteModel = new SiteModel
                 {
-                    SiteName = Regex.Replace(SiteName, RegexResource.SpecialChar, string.Empty),
-                    Pages = Pages.ToList(),
-                    Status = SiteStatus.Pending
+                    SiteName = site.SiteName,
+                   // Pages = PageCollection,
+                    RootSite = site.RootSite
                 };
-                if (RootSite.HasText())
-                {
-                    siteModel.RootSite = Regex.Replace(RootSite,
-                        string.Join("|", RegexResource.Space, RegexResource.UrlIntoQuotation,
-                            RegexResource.LastSlashCharacter), string.Empty);
-                }
 
-                _dataStorage.AddSite(siteModel);
-                NavigateTo(nameof(MainUserControl));
-                return Task.CompletedTask;
+                var result = await _dataStorage.AddSite(siteModel);
+                if (result.IsSuccess())
+                {
+                    NavigateTo(nameof(MainUserControl));
+                    return;
+                }
+                MessageBox.Show(result.ErrorMessage);
             });
         }
 
-        private DelegateCommand _addNewPageCommand;
-
-        public DelegateCommand AddNewPageCommand => _addNewPageCommand ?? (_addNewPageCommand =
-                                        new DelegateCommand(ExecuteAddNewPageCommand, CanExecuteAddNewPageCommand)
-                                            .ObservesProperty(() => IsBusy)
-                                            .ObservesProperty(() => Page));
-
-        private bool CanExecuteAddNewPageCommand()
+        private bool CanAddSite(SiteViewModel site)
         {
-            return !IsBusy && Page != null && Page.PageSource.HasText() && Regex.IsMatch(Page.PageSource, RegexResource.Url);
+            if (site != null && site.SiteName.HasText()) return true;
+            return PageCollection.Any();
         }
 
-        private void ExecuteAddNewPageCommand()
+        private ICommand _addNewPageCommand;
+        public ICommand AddNewPageCommand => _addNewPageCommand ?? (_addNewPageCommand =
+                                        new DelegateCommand<PageViewModel>(ExecuteAddNewPageCommand, page => CanExecuteCommand())
+                                            .ObservesProperty(() => IsBusy));
+
+        private void ExecuteAddNewPageCommand(PageViewModel page)
         {
-            var pageModel = _converter.Map<PageViewModel, PageModel>(Page);
-            pageModel.IsHtml = false;
-            AddAPage(pageModel);
+            var pageSource = page.PageSource;
+
+            if (pageSource.HasText() && Regex.IsMatch(pageSource, RegexResource.Url))
+            {
+                page.IsHtml = false;
+                AddAPage(page);
+            }
         }
 
-        private DelegateCommand _addPageWithSourceCommand;
-        public DelegateCommand AddPageWithSourceCommand => _addPageWithSourceCommand ?? (_addPageWithSourceCommand =
-                                        new DelegateCommand(ExecuteAddPageWithSourceCommand, CanExecuteAddPageWithSourceCommand)
-                                                .ObservesProperty(() => IsBusy)
-                                                .ObservesProperty(() => Page));
+        private ICommand _addPageWithSourceCommand;
+        public ICommand AddPageWithSourceCommand => _addPageWithSourceCommand ?? (_addPageWithSourceCommand =
+                                        new DelegateCommand<PageViewModel>(ExecuteAddPageWithSourceCommand, page => CanExecuteCommand())
+                                                .ObservesProperty(() => IsBusy));
 
-        private bool CanExecuteAddPageWithSourceCommand()
+        private void ExecuteAddPageWithSourceCommand(PageViewModel page)
         {
-            return !IsBusy && Page != null && Page.PageName.HasText() && Page.PageSource.HasText();
-        }
-
-        private void ExecuteAddPageWithSourceCommand()
-        {
-            var pageModel = _converter.Map<PageViewModel, PageModel>(Page);
-            pageModel.IsHtml = true;
-            AddAPage(pageModel);
+            page.IsHtml = true;
+            AddAPage(page);
         }
 
         private ICommand _showPageSourceCommand;
         public ICommand ShowPageSourceCommand => _showPageSourceCommand ?? (_showPageSourceCommand =
-                                        new DelegateCommand(() => IsOpenAddSource = !IsOpenAddSource, () => !IsBusy)
-                                            .ObservesProperty(() => IsBusy));
+                                        new DelegateCommand(ExecuteShowPageSourceCommand, CanExecuteCommand).ObservesProperty(() => IsBusy));
+
+        private void ExecuteShowPageSourceCommand()
+        {
+            IsOpenAddSource = !IsOpenAddSource;
+        }
 
         private ICommand _removePageCommand;
 
         public ICommand RemovePageCommand => _removePageCommand ?? (_removePageCommand =
-                                        new DelegateCommand<PageModel>(ExecuteRemovePageCommand, page => !IsBusy)
+                                        new DelegateCommand<PageViewModel>(ExecuteRemovePageCommand, item => CanExecuteCommand())
                                             .ObservesProperty(() => IsBusy));
 
-        private void ExecuteRemovePageCommand(PageModel page)
+        private void ExecuteRemovePageCommand(PageViewModel page)
         {
             if (page != null)
             {
-                Pages.Remove(page);
+                PageCollection.Remove(page);
             }
         }
 
-        internal PageModel GetPageByName(string name)
+        private void AddAPage(PageViewModel pageModel)
         {
-            return Pages.FirstOrDefault(x => x.Name.Equals(name.Trim(), StringComparison.CurrentCultureIgnoreCase));
+            var page = _converter.Map<PageViewModel, PageViewModel>(pageModel);
+
+            page.Id = Guid.NewGuid().ToString();
+
+            var pageName = VerifyPageName(page.PageName);
+            if (pageName.HasNoText())
+            {
+                pageName = VerifyPageName(page.PageSource);
+            }
+
+            page.PageName = pageName;
+            PageCollection.Add(page);
+            Page.Reset();
         }
 
-        private void AddAPage(PageModel pageModel)
+
+        private string VerifyPageName(string pageName)
         {
-            pageModel.Name = Regex.Replace(pageModel.Name, RegexResource.SpecialChar, string.Empty);
-            Pages.Add(pageModel);
-            Page.Reset();
-            AddSiteCommand.RaiseCanExecuteChanged();
+            pageName = Regex.Replace(pageName, RegexResource.SpecialChar, string.Empty);
+            var page = PageCollection.GetByName(pageName);
+            if (page == null) return pageName;
+
+            var tempPage = string.Empty;
+            var index = 1;
+            while (tempPage.HasNoText())
+            {
+                tempPage = $"{page.PageName}_{index}";
+                if (PageCollection.GetByName(tempPage) != null)
+                {
+                    index++;
+                    tempPage = string.Empty;
+                }
+            }
+            return tempPage;
+        }
+
+        private bool CanExecuteCommand()
+        {
+            return !IsBusy;
         }
     }
 }

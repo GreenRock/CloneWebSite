@@ -1,10 +1,11 @@
-﻿namespace CopyHtmlWebSite.MainApp.ViewModels.ViewModelBases
-{
-    using System;
-    using System.Threading.Tasks;
-    using System.Windows;
-    using Prism.Mvvm;
+﻿using Prism.Mvvm;
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
+using System.Windows;
 
+namespace CopyHtmlWebSite.MainApp.ViewModels.ViewModelBases
+{
     public abstract class ViewModelBase : BindableBase
     {
         private bool _isBusy = false;
@@ -45,14 +46,15 @@
             SetBusy(false);
         }
 
-        public virtual Task HandleError(Exception ex)
+        protected virtual Task HandleError(Exception ex)
         {
+            Debug.WriteLine(ex);
             return Task.CompletedTask;
         }
 
         protected void SetWithTask(Action invoke)
         {
-            Application.Current.Dispatcher.Invoke(invoke);
+            Application.Current.Dispatcher?.Invoke(invoke);
         }
     }
 }

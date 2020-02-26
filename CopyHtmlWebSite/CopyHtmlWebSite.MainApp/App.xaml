@@ -5,7 +5,13 @@
              xmlns:valueConverter="clr-namespace:CopyHtmlWebSite.MainApp.ValueConverter">
     <Application.Resources>
        <ResourceDictionary>
-           <valueConverter:InvertBooleanConvert x:Key="InvertBooleanConvert"/>
+            <valueConverter:InvertBooleanConverter x:Key="InvertBooleanConvert"/>
+            <valueConverter:StringNotNullOrEmptyConverter x:Key="StringNotNullOrEmptyConverter"/>
+            <valueConverter:StringNullOrEmptyConverter x:Key="StringNullOrEmptyConverter"/>
+            <valueConverter:ObjectNotNullConverter x:Key="ObjectNotNullConverter"/>
+            <valueConverter:ObjectNullConverter x:Key="ObjectNullConverter"/>
+            <valueConverter:ListNotNullOrEmptyConverter x:Key="ListNotNullOrEmptyConverter"/>
+            <valueConverter:ListNullOrEmptyConverter x:Key="ListNullOrEmptyConverter"/>
         </ResourceDictionary>
     </Application.Resources>
 </unity:PrismApplication>

@@ -2,7 +2,7 @@
 using CopyHtmlWebSite.Core.Infrastructure;
 using CopyHtmlWebSite.MainApp.Helpers;
 using CopyHtmlWebSite.MainApp.Services.Converts;
-using CopyHtmlWebSite.MainApp.Services.DataStorages;
+using CopyHtmlWebSite.MainApp.Services.DataStorage;
 using CopyHtmlWebSite.MainApp.Services.DialogServices;
 using CopyHtmlWebSite.MainApp.Services.SettingsServices;
 using CopyHtmlWebSite.MainApp.Services.SiteFactories;

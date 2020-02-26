@@ -13,7 +13,14 @@
     </UserControl.Resources>
     <Grid>
         <ListView ItemsSource="{ Binding Items }"
-                  BorderBrush="Transparent">
+                  BorderBrush="Transparent"
+                  HorizontalContentAlignment="Stretch"
+                  ScrollViewer.VerticalScrollBarVisibility="Disabled">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"></StackPanel>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Button Style="{ StaticResource ButtonImage }" ToolTip="{ Binding Display }" Command="{ Binding DataContext.ItemSelectedCommand, RelativeSource={RelativeSource AncestorType=UserControl} }" CommandParameter="{ Binding . }">

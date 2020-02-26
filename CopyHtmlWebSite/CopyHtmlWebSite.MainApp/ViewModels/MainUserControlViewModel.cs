@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using CopyHtmlWebSite.Core.Models.Service;
 using CopyHtmlWebSite.MainApp.Services.SiteFactories;
 
 namespace CopyHtmlWebSite.MainApp.ViewModels
@@ -51,10 +52,10 @@ namespace CopyHtmlWebSite.MainApp.ViewModels
                   SetBusy();
                   Sites.Clear();
                   await LoadSettings();
-                  var sites = _dataStorage.GetSites();
-                  if (sites != null)
+                  var sites = await _dataStorage.GetSites();
+                  if (sites.IsSuccess())
                   {
-                      foreach (var site in sites)
+                      foreach (var site in sites.Data)
                       {
                           Sites.Add(site);
                       }
@@ -65,8 +66,9 @@ namespace CopyHtmlWebSite.MainApp.ViewModels
         private ICommand _chooseFolderCommand;
 
         public ICommand ChooseFolderCommand => _chooseFolderCommand ?? (_chooseFolderCommand =
-                                                   new DelegateCommand(ExecuteChooseFolderCommand, () => !IsBusy)
+                                                   new DelegateCommand(ExecuteChooseFolderCommand, CanExecuteCommand)
                                                        .ObservesProperty(() => IsBusy));
+
         private void ExecuteChooseFolderCommand()
         {
             try
@@ -101,7 +103,7 @@ namespace CopyHtmlWebSite.MainApp.ViewModels
         private ICommand _removeSiteCommand;
 
         public ICommand RemoveSiteCommand => _removeSiteCommand ?? (_removeSiteCommand =
-                                        new DelegateCommand<SiteModel>(ExecuteRemoveSiteCommand, (site) => !IsBusy)
+                                        new DelegateCommand<SiteModel>(ExecuteRemoveSiteCommand, item => CanExecuteCommand())
                                             .ObservesProperty(() => IsBusy));
 
         private void ExecuteRemoveSiteCommand(SiteModel site)
@@ -134,8 +136,7 @@ namespace CopyHtmlWebSite.MainApp.ViewModels
 
         public ICommand StartCommand => _startCommand ?? (_startCommand =
                                             new DelegateCommand(async () => await ExecuteStartCommand(), CanExecuteStartCommand)
-                                                .ObservesProperty(() => IsBusy)
-                                                .ObservesProperty(() => Sites));
+                                                .ObservesProperty(() => IsBusy));
 
         private bool CanExecuteStartCommand()
         {
@@ -149,10 +150,13 @@ namespace CopyHtmlWebSite.MainApp.ViewModels
                 SetStart();
                 SetBusy();
 
-                var sites = _dataStorage.GetSites();
-                foreach (var site in sites)
+                var sites = await _dataStorage.GetSites();
+                if (sites.IsSuccess())
                 {
-                    await _siteService.Run(site);
+                    foreach (var site in sites.Data)
+                    {
+                        await _siteService.Run(site);
+                    }
                 }
             }
             catch (Exception ex)
@@ -174,6 +178,11 @@ namespace CopyHtmlWebSite.MainApp.ViewModels
         private void ClearStart()
         {
             SetWithTask(() => { IsStart = false; });
+        }
+
+        private bool CanExecuteCommand()
+        {
+            return !IsBusy;
         }
     }
 }

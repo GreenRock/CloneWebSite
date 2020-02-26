@@ -7,7 +7,7 @@
             return !string.IsNullOrWhiteSpace(val);
         }
 
-        public static bool HasNotText(this string val)
+        public static bool HasNoText(this string val)
         {
             return string.IsNullOrWhiteSpace(val);
         }

@@ -11,7 +11,7 @@ namespace CopyHtmlWebSite.MainApp.Services.Converts
         {
             Mapper.Reset();
 
-            Mapper.AddMap<PageModel, PageViewModel>(source => new PageViewModel(null)
+            Mapper.AddMap<PageModel, PageViewModel>(source => new PageViewModel()
             {
                 PageSource = source.Source,
                 PageName = source.Name
